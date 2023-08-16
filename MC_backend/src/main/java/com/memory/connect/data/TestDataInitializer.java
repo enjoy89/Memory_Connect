@@ -1,6 +1,7 @@
 package com.memory.connect.data;
 
 import com.memory.connect.model.test.entity.Test;
+import com.memory.connect.model.test.repository.TestRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -8,7 +9,8 @@ import javax.annotation.PostConstruct;
 
 @Component
 @RequiredArgsConstructor
-public class QuestionDataInitializer {
+public class TestDataInitializer {
+    private final TestRepository testRepository;
 
     @PostConstruct
     public void init() {
@@ -36,5 +38,11 @@ public class QuestionDataInitializer {
                 .question("아래 물건의 이름은 무엇일까요?")
                 .build();
 
+        testRepository.save(test_1);
+        testRepository.save(test_2);
+        testRepository.save(test_3);
+        testRepository.save(test_4);
+        testRepository.save(test_5);
+        testRepository.save(test_6);
     }
 }

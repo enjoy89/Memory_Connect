@@ -1,6 +1,5 @@
 package com.memory.connect.service.dto;
 
-
 import com.memory.connect.model.test.entity.Test;
 import lombok.Builder;
 import lombok.Data;
