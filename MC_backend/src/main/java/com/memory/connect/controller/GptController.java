@@ -1,9 +1,10 @@
 package com.memory.connect.controller;
 
+import com.memory.connect.model.answer.entity.Answer;
 import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.service.QuestionService;
 import com.memory.connect.service.SpeechToTextService;
-import com.memory.connect.service.dto.MemberResponseData;
+import com.memory.connect.service.dto.RequestData;
 import io.github.flashvayne.chatgpt.service.ChatgptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class GptController {
      * Chat GPT와 간단한 채팅 서비스g
      */
     @PostMapping("/{id}")
-    public ResponseEntity<String> sendMessageToGPT(@PathVariable Long id) {
+    public ResponseEntity<String> sendMessageToGPT(@PathVariable int id) {
         Test question = questionService.getQuestionById(id);
         return ResponseEntity.ok(speechToTextService.getChatResponse(question.getQuestion()));
     }
@@ -31,8 +32,12 @@ public class GptController {
     /**
      * 사용자로부터 응답 데이터를 가져와서 DB에 저장
      */
-    @PostMapping("/{id}/get-answer")
-    public ResponseEntity<Test> getAnswerFromMember(@PathVariable Long id, @RequestBody MemberResponseData data) {
-        return ResponseEntity.ok(questionService.saveAnswer(id, data));
+    @PostMapping("/get-answer")
+    public ResponseEntity<Answer> getAnswerFromMember(@RequestBody RequestData requestData) {
+
+        String receivedText = requestData.getVoiceText();
+        int receivedTestId = requestData.getTestId();
+
+        return ResponseEntity.ok(questionService.saveAnswer(receivedTestId, requestData));
     }
 }

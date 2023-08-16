@@ -1,10 +1,11 @@
 package com.memory.connect.service;
 
 
+import com.memory.connect.model.answer.entity.Answer;
+import com.memory.connect.model.answer.repository.AnswerRepository;
 import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.model.test.repository.TestRepository;
-import com.memory.connect.service.dto.MemberResponseData;
-import com.memory.connect.service.dto.MessageRequestDto;
+import com.memory.connect.service.dto.RequestData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,22 +16,23 @@ import javax.persistence.EntityNotFoundException;
 public class QuestionService {
 
     private final TestRepository testRepository;
+    private final AnswerRepository answerRepository;
 
-    public Test getQuestionById(Long id) {
+    public Test getQuestionById(int id) {
         return testRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Question not found with id: " + id));
     }
 
-    public Test getAnswerByQuestionId(Long questionId) {
+    public Test getAnswerByQuestionId(int questionId) {
         return testRepository.findById(questionId)
                 .orElseThrow(() -> new EntityNotFoundException("Answer not found with questionId: " + questionId));
     }
 
-    public Test saveAnswer(Long id, MemberResponseData data) {
+    public Answer saveAnswer(int id, RequestData requestData) {
         Test test = testRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Test not found with id: " + id));
 
-        return testRepository.save(data.toEntity(test.getQuestion()));
+        return answerRepository.save(requestData.toEntity(test));
     }
 
 }

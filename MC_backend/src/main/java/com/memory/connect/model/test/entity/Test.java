@@ -17,17 +17,13 @@ public class Test extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "test_id")
-    private Long id;
+    private int id;
 
     @Column(name = "test_question", nullable = false)
     private String question;
 
-    @Column(name = "test_answer", nullable = true)
-    private String answer;
-
     @Builder
-    public Test(String question, String answer) {
+    public Test(String question) {
         this.question = question;
-        this.answer = answer;
     }
 }
