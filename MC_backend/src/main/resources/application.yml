@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://learnnrun.c2pjf92fzjv5.ap-northeast-2.rds.amazonaws.com:3306/mc_test
+    username: root
+    password: dlcksghqkqh
+
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      use-new-id-generator-mappings: false
+    show-sql: true
+    properties:
+      hibernate.format_sql: true
+      dialect: org.hibernate.dialect.MySQL8InnoDBDialect
+    defer-datasource-initialization: true
+
+  sql:
+    init:
+      mode: always
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.springframework.transaction: DEBUG
+
+
+chatgpt:
+  api-key: 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
