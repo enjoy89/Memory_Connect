@@ -3,7 +3,7 @@ package com.memory.connect.controller;
 import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.service.QuestionService;
 import com.memory.connect.service.SpeechToTextService;
-import com.memory.connect.service.dto.MessageRequestDto;
+import com.memory.connect.service.dto.MemberResponseData;
 import io.github.flashvayne.chatgpt.service.ChatgptService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ public class GptController {
     private final ChatgptService chatgptService;
 
     /**
-     * Chat GPT와 간단한 채팅 서비스
+     * Chat GPT와 간단한 채팅 서비스g
      */
     @PostMapping("/{id}")
     public ResponseEntity<String> sendMessageToGPT(@PathVariable Long id) {
@@ -29,10 +29,10 @@ public class GptController {
     }
 
     /**
-     * 사용자로부터 응답 데이터를 가져옴
+     * 사용자로부터 응답 데이터를 가져와서 DB에 저장
      */
     @PostMapping("/{id}/get-answer")
-    public ResponseEntity<String> getAnswerFromMember(@PathVariable Long id, @RequestBody MessageRequestDto responseDto) {
-        return null;
+    public ResponseEntity<Test> getAnswerFromMember(@PathVariable Long id, @RequestBody MemberResponseData data) {
+        return ResponseEntity.ok(questionService.saveAnswer(id, data));
     }
 }

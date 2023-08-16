@@ -3,6 +3,7 @@ package com.memory.connect.service;
 
 import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.model.test.repository.TestRepository;
+import com.memory.connect.service.dto.MemberResponseData;
 import com.memory.connect.service.dto.MessageRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -25,10 +26,11 @@ public class QuestionService {
                 .orElseThrow(() -> new EntityNotFoundException("Answer not found with questionId: " + questionId));
     }
 
-    /*
-    public Test saveAnswer(MessageRequestDto responseDto) {
-        return null;
+    public Test saveAnswer(Long id, MemberResponseData data) {
+        Test test = testRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Test not found with id: " + id));
+
+        return testRepository.save(data.toEntity(test.getQuestion()));
     }
-     */
 
 }

@@ -19,10 +19,10 @@ public class Test extends BaseTimeEntity {
     @Column(name = "test_id")
     private Long id;
 
-    @Column(name = "test_question")
+    @Column(name = "test_question", nullable = false)
     private String question;
 
-    @Column(name = "test_answer")
+    @Column(name = "test_answer", nullable = true)
     private String answer;
 
     @Builder
