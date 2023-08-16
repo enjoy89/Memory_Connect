@@ -1,10 +1,4 @@
 
-server:
-  port: 8088
-
-server:
-  port: 9000
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
