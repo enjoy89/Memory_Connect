@@ -9,15 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MemberResponseData {
 
-    private Long testId;
+    private String testId;
     private String answer;
 
     @Builder
-    public MemberResponseData(Long testId, String answer) {
+    public MemberResponseData(String testId, String answer) {
         this.testId = testId;
         this.answer = answer;
     }
-
     public Test toEntity(String question) {
         return Test.builder()
                 .question(question)

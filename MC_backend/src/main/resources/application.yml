@@ -1,3 +1,7 @@
+
+server:
+  port: 8088
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -5,6 +9,14 @@ spring:
     username: root
     password: dlcksghqkqh
 
+  #Cors 는 프론트와 백 연결을 위한 사용
+  application:
+    cors:
+      allowed-origins: "*"
+      allowed-methods: "GET,POST,PUT,DELETE"
+      allowed-headers: "*"
+      allow-credentials: true
+      
   jpa:
     open-in-view: true
     hibernate:
