@@ -24,14 +24,14 @@ public class Answer extends BaseTimeEntity {
     @Column(name = "answer_content")
     private String content;
 
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "test_id")
-//    @JsonIgnore
-//    private Test test;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "test_id")
+    @JsonIgnore
+    private Test test;
 
     @Builder
     public Answer(String content, Test test) {
         this.content = content;
-//        this.test = test;
+        this.test = test;
     }
 }
