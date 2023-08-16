@@ -21,7 +21,7 @@ public class Answer extends BaseTimeEntity {
     @Column(name = "answer_id")
     private int id;
 
-    @Column(name = "answer_content")
+    @Column(name = "answer_content",columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String content;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -32,6 +32,6 @@ public class Answer extends BaseTimeEntity {
     @Builder
     public Answer(String content, Test test) {
         this.content = content;
-        this.test = test;
+//        this.test = test;
     }
 }
