@@ -39,4 +39,9 @@ public class QuestionService {
     public List<Test> getAllData() {
         return testRepository.findAll();
     }
+
+    public Test getDataById(int id) {
+        return testRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("test data not found with id: " + id));
+    }
 }
