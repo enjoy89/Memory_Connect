@@ -32,6 +32,6 @@ public class Answer extends BaseTimeEntity {
     @Builder
     public Answer(String content, Test test) {
         this.content = content;
-//        this.test = test;
+        this.test = test;
     }
 }

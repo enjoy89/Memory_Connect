@@ -26,8 +26,7 @@ public class SpeechToTextService {
      * Chat GPT에게 질문을 던진다.
      */
     public String getChatResponse(String question) {
-        String requestMessage = BASE_PROMPT + question;
-        return chatgptService.sendMessage(requestMessage);
+        return chatgptService.sendMessage(question);
     }
 
     /**
@@ -45,7 +44,6 @@ public class SpeechToTextService {
         String question = BASE_PROMPT + test_question + member_response;
         log.info(question);
 
-        return question;
-
+        return getChatResponse(question);
     }
 }
