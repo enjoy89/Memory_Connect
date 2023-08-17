@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class QuestionService {
+public class DataService {
 
     private final TestRepository testRepository;
     private final AnswerRepository answerRepository;

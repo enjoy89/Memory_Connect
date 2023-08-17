@@ -1,8 +1,7 @@
 package com.memory.connect.controller;
 
 import com.memory.connect.model.answer.entity.Answer;
-import com.memory.connect.model.test.entity.Test;
-import com.memory.connect.service.QuestionService;
+import com.memory.connect.service.DataService;
 import com.memory.connect.service.SpeechToTextService;
 import com.memory.connect.service.dto.RequestData;
 import io.github.flashvayne.chatgpt.service.ChatgptService;
@@ -17,16 +16,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/chat-gpt")
 public class GptController {
     private final SpeechToTextService speechToTextService;
-    private final QuestionService questionService;
+    private final DataService questionService;
     private final ChatgptService chatgptService;
 
     /**
-     * Chat GPT와 간단한 채팅 서비스g
+     * Chat GPT와 간단한 채팅 서비스
      */
     @PostMapping("/{id}")
     public ResponseEntity<String> sendMessageToGPT(@PathVariable int id) {
-        Test question = questionService.getQuestionById(id);
-        return ResponseEntity.ok(speechToTextService.getChatResponse(question.getQuestion()));
+        return ResponseEntity.ok(speechToTextService.getChatResponse(speechToTextService.makeQuestion(id)));
     }
 
     /**
@@ -43,5 +41,7 @@ public class GptController {
 
         return ResponseEntity.ok(questionService.saveAnswer(receivedTestId, requestData));
     }
+
+
 
 }

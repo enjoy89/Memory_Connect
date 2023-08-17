@@ -1,7 +1,7 @@
 package com.memory.connect.controller;
 
 import com.memory.connect.model.test.entity.Test;
-import com.memory.connect.service.QuestionService;
+import com.memory.connect.service.DataService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class DataController {
 
-    private final QuestionService questionService;
+    private final DataService questionService;
 
     @GetMapping("/data")
     public List<Test> getAllData() {
