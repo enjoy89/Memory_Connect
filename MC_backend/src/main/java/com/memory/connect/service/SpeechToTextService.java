@@ -15,7 +15,7 @@ import javax.persistence.EntityNotFoundException;
 @RequiredArgsConstructor
 @Slf4j
 public class SpeechToTextService {
-    private final String BASE_PROMPT = "너는 지금부터 질문에 적절한 문맥으로 답변을 했는지 확인해주는 거야. 문제에 대한 대답이 문맥상 적절한지 판단해서 적절하지 않으면 0, 적절하면 1 을 반환해줘.";
+    private final String BASE_PROMPT = "너는 지금부터 질문에 적절한 답변을 했는지 확인해주는 거야. 답변이 적절한지 판단해서 적절하지 않으면 0, 적절하면 1 을 반환해줘.";
     private final String BASE_Question = "질문: ";
     private final String BASE_Answer = "답변: ";
     private final ChatgptService chatgptService;
