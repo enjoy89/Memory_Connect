@@ -1,16 +1,14 @@
 server:
   port: 8088
 
-chatgpt:
-  api-key:
-
 spring:
   http:
     encoding:
       charset: UTF-8
       enabled: true
       force: true
-
+  config:
+    import: application-secret.yml
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://learnnrun.c2pjf92fzjv5.ap-northeast-2.rds.amazonaws.com:3306/mc_test
