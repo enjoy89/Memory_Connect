@@ -35,3 +35,6 @@ out/
 
 ### VS Code ###
 .vscode/
+
+###gpt-key###
+application-secret.yml

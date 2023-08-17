@@ -35,7 +35,6 @@ public class GptController {
 
         String receivedText = requestData.getVoiceText();
         int receivedTestId = requestData.getTestId();
-
         System.out.println("Question Id: " + receivedTestId);
         System.out.println("Received Voice Text: " + receivedText);
 

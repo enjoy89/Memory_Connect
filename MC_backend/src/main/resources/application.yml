@@ -1,7 +1,5 @@
-
 server:
   port: 8088
-
 
 spring:
   http:
@@ -46,6 +44,3 @@ logging:
     org.hibernate.SQL: DEBUG
     org.springframework.transaction: DEBUG
 
-
-chatgpt:
-  api-key: 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
