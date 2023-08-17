@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -35,4 +36,7 @@ public class QuestionService {
         return answerRepository.save(requestData.toEntity(test));
     }
 
+    public List<Test> getAllData() {
+        return testRepository.findAll();
+    }
 }
