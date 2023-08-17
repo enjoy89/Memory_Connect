@@ -1,6 +1,9 @@
 server:
   port: 8088
 
+chatgpt:
+  api-key:
+
 spring:
   http:
     encoding:

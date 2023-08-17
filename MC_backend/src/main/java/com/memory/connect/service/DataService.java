@@ -7,12 +7,14 @@ import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.model.test.repository.TestRepository;
 import com.memory.connect.service.dto.RequestData;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
+@Slf4j
 @RequiredArgsConstructor
 public class DataService {
 
@@ -32,7 +34,6 @@ public class DataService {
     public Answer saveAnswer(int id, RequestData requestData) {
         Test test = testRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Test not found with id: " + id));
-
         return answerRepository.save(requestData.toEntity(test));
     }
 

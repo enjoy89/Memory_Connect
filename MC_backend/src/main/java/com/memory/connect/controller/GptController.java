@@ -24,15 +24,20 @@ public class GptController {
      */
     @PostMapping("/{id}")
     public ResponseEntity<String> sendMessageToGPT(@PathVariable int id) {
-        return ResponseEntity.ok(speechToTextService.getChatResponse(speechToTextService.makeQuestion(id)));
+        System.out.println("*****sendMessageToGPT******");
+        System.out.println(id);
+        System.out.println("***********");
+        return ResponseEntity.ok(speechToTextService.makeQuestion(id));
     }
+
+    //chat-gpt 와 간단한 채팅 서비스 소스
 
     /**
      * 사용자로부터 응답 데이터를 가져와서 DB에 저장
      */
     @PostMapping("/get-answer")
     public ResponseEntity<Answer> getAnswerFromMember(@RequestBody RequestData requestData) {
-
+        //여기로 test_id가 들어오게됨
         String receivedText = requestData.getVoiceText();
         int receivedTestId = requestData.getTestId();
         System.out.println("Question Id: " + receivedTestId);
@@ -40,7 +45,4 @@ public class GptController {
 
         return ResponseEntity.ok(questionService.saveAnswer(receivedTestId, requestData));
     }
-
-
-
 }
