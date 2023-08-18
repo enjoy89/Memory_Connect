@@ -27,6 +27,9 @@ jobs:
       - name: Change directory to backend
         run: cd MC_backend
         shell: bash
+      - name: test
+        run: ls
+        shell:bash
 
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
