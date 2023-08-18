@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http; // Import the http package
+import 'package:m_c/screens/pre_question_screen.dart';
 import 'package:m_c/screens/quiz_screen.dart';
 
 void main() {
@@ -65,7 +66,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QuizScreen(httpClient: httpClient), // Pass the http.Client
+                      builder: (context) => QuizScreen(
+                          httpClient: httpClient), // Pass the http.Client
+                      //builder: (context) => const PreQuestionScreen(),
                     ),
                   );
                 },

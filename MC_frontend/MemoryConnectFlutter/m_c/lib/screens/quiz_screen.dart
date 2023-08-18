@@ -4,6 +4,7 @@ import 'package:m_c/data/questionData.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:http/http.dart' as http;
+import 'package:video_player/video_player.dart';
 
 class QuizScreen extends StatefulWidget {
   final http.Client httpClient; // Change this to http.Client
@@ -23,10 +24,24 @@ class _QuizScreenState extends State<QuizScreen> {
   final List<String> _captions = []; // 질문 데이터를 자막처럼 저장하는 리스트
   int _currentCaptionIndex = 0; // 현재 출력할 자막 인덱스
 
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
   @override
   void initState() {
     super.initState();
     _initSpeech();
+
+    // 웹용 VideoPlayerController 생성
+    _controller = VideoPlayerController.networkUrl(Uri.parse(
+        "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4"));
+    _initializeVideoPlayerFuture = _controller.initialize();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   void _initSpeech() async {
@@ -101,49 +116,62 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         title: const Text('Speech Demo'),
       ),
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
               padding: const EdgeInsets.all(16),
-              child: const Text(
-                '안녕하세요 Memory Connect 인공지능입니다.',
-                style: TextStyle(fontSize: 30.0),
-              ),
-            ),
-            Expanded(
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      '답변: ' +
-                          (_speechToText.isListening
-                              ? _lastWords
-                              : _speechEnabled
-                                  ? '우측 하단의 마이크를 눌러주세요.'
-                                  : 'Speech not available'),
-                      style: TextStyle(
-                        fontSize: 40,
-                      ),
-                      textAlign: TextAlign.left, // 자막 중앙 정렬
-                    ),
-                    SizedBox(height: 20),
-                    Text(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  const Text(
+                    '안녕하세요 Memory Connect 인공지능입니다.',
+                    style: TextStyle(fontSize: 30.0),
+                  ),
+                  const SizedBox(height: 10),
+                  SizedBox(
+                    height: 50,
+                    child: Text(
                       _currentCaptionIndex < _captions.length
                           ? _captions[_currentCaptionIndex]
                           : '자막이 생성되는 구역입니다.',
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontSize: 20,
                       ),
                       textAlign: TextAlign.center, // 자막 중앙 정렬
                     ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(height: 20),
+                  Center(
+                    child: FutureBuilder(
+                      future: _initializeVideoPlayerFuture,
+                      builder: (context, snapshot) {
+                        if (!snapshot.hasError) {
+                          _controller.play(); // 바로 재생하도록.
+                          return AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          );
+                        } else {
+                          print(snapshot.error);
+                          return const CircularProgressIndicator(); // 로딩 중 표시
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
+            SizedBox(
+              height: 50,
+              child: Text(
+                '답변: ${_speechToText.isListening ? _lastWords : _speechEnabled ? '우측 하단의 마이크를 눌러주세요.' : 'Speech not available'}',
+                style: const TextStyle(
+                  fontSize: 40,
+                ), // 자막 중앙 정렬
+              ),
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
