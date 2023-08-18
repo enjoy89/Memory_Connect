@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @Slf4j
 @RequestMapping("/api/v1/chat-gpt")
+@CrossOrigin(origins = "*")
 public class GptController {
     private final SpeechToTextService speechToTextService;
     private final DataService questionService;
