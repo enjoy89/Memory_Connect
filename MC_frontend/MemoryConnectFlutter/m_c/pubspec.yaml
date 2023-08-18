@@ -42,6 +42,7 @@ dependencies:
   webview_flutter: ^4.2.2
   json_annotation:
   http: ^1.1.0
+  video_player: ^2.7.0
 
 dev_dependencies:
   flutter_test:
