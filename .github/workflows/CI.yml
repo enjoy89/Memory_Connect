@@ -29,6 +29,7 @@ jobs:
         shell: bash
         
       - name: test
+        working-directory: backend
         run: ls
         shell: bash
 
