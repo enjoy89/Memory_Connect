@@ -14,7 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "*")
 public class DataController {
-
+    //CORS 설정
     private final DataService questionService;
 
     @GetMapping("/data")
