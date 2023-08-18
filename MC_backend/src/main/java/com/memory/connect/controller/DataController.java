@@ -4,10 +4,7 @@ import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.service.DataService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,6 +12,7 @@ import java.util.List;
 @RequestMapping(value = "/api", produces = "application/json;charset=UTF-8")
 @Slf4j
 @RequiredArgsConstructor
+@CrossOrigin(origins = "*")
 public class DataController {
 
     private final DataService questionService;
