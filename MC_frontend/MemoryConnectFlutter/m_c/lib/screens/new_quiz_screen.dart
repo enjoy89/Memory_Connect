@@ -137,7 +137,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
       child: AnimatedSmoothIndicator(
         activeIndex: activeIndex,
         count: videos.length,
-        effect: ExpandingDotsEffect(
+        effect: SlideEffect(
             dotHeight: 20,
             dotWidth: 20,
             spacing: 30,
