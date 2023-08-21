@@ -32,13 +32,13 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
 
   int activeIndex = 0;
   List<String> videos = [
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/지금_계신_이_장소는_어떤_곳인가요.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/지금_생각나는_물건_3가지를_아무거나_말씀해주세요.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/주민등록증을_주웠을때.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
   ];
 
   late VideoPlayerController _controller;
@@ -50,8 +50,8 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
     _initSpeech();
 
     // 웹용 VideoPlayerController 생성
-    _controller = VideoPlayerController.networkUrl(Uri.parse(
-        "https://careerup-client.s3.ap-northeast-2.amazonaws.com/KakaoTalk_Video_2023-08-15-14-52-52.mp4"));
+    _controller =
+        VideoPlayerController.networkUrl(Uri.parse(videos[activeIndex]));
     _initializeVideoPlayerFuture = _controller.initialize();
   }
 
@@ -106,8 +106,9 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
 
   //----------------------
   Widget imageSlider(path, index) {
-    _controller.pause();
-    _controller = VideoPlayerController.networkUrl(Uri.parse(videos[index]));
+    _controller.dispose();
+    _controller =
+        VideoPlayerController.networkUrl(Uri.parse(videos[activeIndex]));
     _initializeVideoPlayerFuture = _controller.initialize();
 
     return SizedBox(
@@ -118,6 +119,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
         builder: (context, snapshot) {
           if (!snapshot.hasError) {
             _controller.play(); // 바로 재생하도록.
+            _controller.value.duration.inMilliseconds;
             return AspectRatio(
               aspectRatio: _controller.value.aspectRatio,
               child: VideoPlayer(_controller),
@@ -137,10 +139,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
       child: AnimatedSmoothIndicator(
         activeIndex: activeIndex,
         count: videos.length,
-        effect: SlideEffect(
-            dotHeight: 20,
-            dotWidth: 20,
-            spacing: 30,
+        effect: ScaleEffect(
+            dotHeight: 25,
+            dotWidth: 25,
+            spacing: 35,
             activeDotColor: Colors.deepPurple.shade400,
             dotColor: Colors.deepPurple.shade100.withOpacity(0.8)),
       ));
@@ -159,12 +161,14 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(height: 10),
+                  indicator(),
+                  const SizedBox(height: 10),
                   Stack(
-                    alignment: Alignment.topCenter,
+                    alignment: Alignment.bottomCenter,
                     children: <Widget>[
                       CarouselSlider.builder(
                         options: CarouselOptions(
-                          height: 500,
+                          height: MediaQuery.of(context).size.height * 0.5,
                           initialPage: 0,
                           viewportFraction: 1,
                           enlargeCenterPage: true,
@@ -178,24 +182,31 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                           return imageSlider(path, index);
                         },
                       ),
-                      Align(
-                        alignment: Alignment.topCenter,
-                        child: indicator(),
-                      ),
+                      // Align(
+                      //   alignment: Alignment.topCenter,
+                      //   child: indicator(),
+                      // ),
                       Positioned(
-                        top: 400,
-                        child: Text(
-                          activeIndex >= 0 ||
-                                  activeIndex <
-                                      questionController.captions.length
-                              ? questionController.captions[activeIndex]
-                              : '자막이 생성되는 구역입니다.',
-                          style: const TextStyle(
-                            backgroundColor: Colors.black,
-                            color: Colors.white,
-                            fontSize: 30,
+                        width: MediaQuery.of(context).size.width * 0.6,
+                        bottom: 10,
+                        child: Container(
+                          color: Colors.black,
+                          child: RichText(
+                            maxLines: 5,
+                            text: TextSpan(
+                              text: activeIndex >= 0 ||
+                                      activeIndex <
+                                          questionController.captions.length
+                                  ? questionController.captions[activeIndex]
+                                  : '자막이 생성되는 구역입니다.',
+                              style: const TextStyle(
+                                backgroundColor: Colors.black,
+                                color: Colors.white,
+                                fontSize: 35,
+                              ),
+                            ),
+                            textAlign: TextAlign.center, // 자막 중앙 정렬
                           ),
-                          textAlign: TextAlign.center, // 자막 중앙 정렬
                         ),
                       ),
                     ],
@@ -228,7 +239,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                         ),
                         child: Text(
                           _speechToText.isNotListening ? '말하기' : 'STOP',
-                          style: const TextStyle(fontSize: 35),
+                          style: const TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                       ElevatedButton(
@@ -236,6 +250,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                           print('Next');
                         },
                         style: ButtonStyle(
+                          backgroundColor: MaterialStateProperty.all<Color>(
+                              Colors.deepPurple),
+                          foregroundColor: MaterialStateProperty.all<Color>(
+                              Colors.deepPurple.shade100),
                           padding: MaterialStateProperty.all<EdgeInsets>(
                             const EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 30),
@@ -243,7 +261,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                         ),
                         child: const Text(
                           '다음 >',
-                          style: TextStyle(fontSize: 35),
+                          style: TextStyle(
+                            fontSize: 35,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                       ),
                     ],
