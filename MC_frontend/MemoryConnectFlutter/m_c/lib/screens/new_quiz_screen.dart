@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_c/controller/question_controller.dart';
 import 'package:m_c/data/questionData.dart';
+import 'package:m_c/screens/loading_result.dart';
 import 'package:m_c/screens/result_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
@@ -257,7 +258,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                               context,
                               MaterialPageRoute(
                                 // Pass the http.Client
-                                builder: (context) => const ResultScreen(),
+                                builder: (context) => const LoadingResult(),
                               ),
                             );
                           }

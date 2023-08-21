@@ -1,10 +1,7 @@
 import 'dart:async';
-import 'dart:html';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http; // Import the http package
 import 'package:lottie/lottie.dart';
-import 'package:m_c/screens/new_quiz_screen.dart';
+import 'package:m_c/screens/completed.dart';
 
 class LoadingResult extends StatefulWidget {
   const LoadingResult({Key? key}) : super(key: key);
@@ -16,7 +13,6 @@ class LoadingResult extends StatefulWidget {
 class _LoadingResultState extends State<LoadingResult>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late final http.Client httpClient; // Declare the http.Client object
 
   @override
   void initState() {
@@ -27,20 +23,16 @@ class _LoadingResultState extends State<LoadingResult>
     );
     _controller.forward(); // 애니메이션 실행
 
-    httpClient = http.Client();
-
     Timer(const Duration(seconds: 3), () {
       Navigator.push(
         context,
-        MaterialPageRoute(
-            builder: (context) => NewQuizScreen(httpClient: httpClient)),
+        MaterialPageRoute(builder: (context) => const Completed()),
       );
     });
   }
 
   @override
   void dispose() {
-    httpClient.close();
     _controller.dispose();
     super.dispose();
   }
@@ -48,9 +40,6 @@ class _LoadingResultState extends State<LoadingResult>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lottie Animation Example'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -60,9 +49,13 @@ class _LoadingResultState extends State<LoadingResult>
               width: 300,
               height: 300,
             ),
-            const Text(
+            Text(
               '잠시만 기다려 주세요...',
-              style: TextStyle(fontSize: 40, color: Colors.green),
+              style: TextStyle(
+                fontSize: 50,
+                color: Colors.deepPurple.shade900,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ],
         ),

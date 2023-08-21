@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:m_c/screens/result_screen.dart';
 
 class Completed extends StatefulWidget {
   const Completed({Key? key}) : super(key: key);
@@ -31,9 +32,6 @@ class _TestState extends State<Completed> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Lottie Animation Example'),
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -54,10 +52,55 @@ class _TestState extends State<Completed> with SingleTickerProviderStateMixin {
                 });
               },
             ),
-            const Text(
+            Text(
               '완료되었습니다.',
-              style: TextStyle(fontSize: 40, color: Colors.green),
+              style: TextStyle(
+                fontSize: 50,
+                color: Colors.deepPurple.shade900,
+                fontWeight: FontWeight.bold,
+              ),
             ),
+            const SizedBox(
+              height: 50,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ResultScreen()),
+                );
+              },
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+                ),
+              ),
+              child: const Text(
+                '결과 보기',
+                style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            ElevatedButton(
+              onPressed: () {},
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+                ),
+              ),
+              child: const Text(
+                '결과 전송하기',
+                style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
           ],
         ),
       ),
