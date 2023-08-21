@@ -71,14 +71,14 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
 
   void _startListening() async {
     await _speechToText.listen(onResult: _onSpeechResult);
-    setState(() {});
+    //setState(() {});
   }
 
   void _stopListening() async {
     await _speechToText.stop();
-    setState(() {
-      print(_lastWords);
-    });
+    // setState(() {
+    //   print(_lastWords);
+    // });
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
@@ -88,7 +88,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
   }
 
   // 여기는 Front to Back 음성데이터를 testId와 voiceText JSON형식으로 전송함
-  Future<void> _sendVoiceDataToApi(String voiceText) async {
+  Future<void> _sendVoiceDataToApi(int testId, String voiceText) async {
     final response = await widget.httpClient.post(
       // Use the provided httpClient
       Uri.parse("http://localhost:8088/api/v1/chat-gpt/get-answer/"),
@@ -96,11 +96,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
       },
-      body: jsonEncode({'testId': testId++, 'voiceText': voiceText}),
+      body: jsonEncode({'testId': testId, 'voiceText': voiceText}),
     );
     if (response.statusCode == 200) {
-      print("Front to Back Complete!!!!");
-      print("축하드립니다람쥐 춤을 추세요");
+      print("음성데이터 전송! testId : $testId, voiceText : $voiceText");
     } else {
       print("음성데이터 전송 문제가 발생했습니다 Error Code:");
       print(response.statusCode);
@@ -223,17 +222,16 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                          setState(() {});
                           print('말하기');
-                          _speechToText.isNotListening
-                              ? setState(() {
-                                  _startListening();
-                                  print(_lastWords);
-                                })
-                              : setState(() {
-                                  _stopListening();
-                                  _sendVoiceDataToApi(_lastWords);
-                                });
+                          if (_speechToText.isNotListening) {
+                            questionController.isListening.value = true;
+                            _startListening();
+                            print(_lastWords);
+                          } else {
+                            questionController.isListening.value = false;
+                            _stopListening();
+                            _sendVoiceDataToApi(activeIndex + 1, _lastWords);
+                          }
                         },
                         style: ButtonStyle(
                           padding: MaterialStateProperty.all<EdgeInsets>(
@@ -241,11 +239,15 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                                 horizontal: 50, vertical: 30),
                           ),
                         ),
-                        child: Text(
-                          _speechToText.isNotListening ? '말하기' : 'STOP',
-                          style: const TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
+                        child: Obx(
+                          () => Text(
+                            !questionController.isListening.value
+                                ? '말하기'
+                                : 'STOP',
+                            style: const TextStyle(
+                              fontSize: 35,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
