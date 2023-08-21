@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http; // Import the http package
 import 'package:m_c/controller/question_controller.dart';
+import 'package:m_c/screens/loading.dart';
+import 'package:m_c/screens/loading_result.dart';
 import 'package:m_c/screens/new_quiz_screen.dart';
 import 'package:m_c/screens/pre_question_screen.dart';
 import 'package:m_c/screens/quiz_screen.dart';
@@ -113,9 +115,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => NewQuizScreen(
-                          httpClient: httpClient), // Pass the http.Client
-                      //builder: (context) => const PreQuestionScreen(),
+                      // builder: (context) => NewQuizScreen(
+                      //     httpClient: httpClient), // Pass the http.Client
+                      builder: (context) => const Loading(),
                     ),
                   );
                 },
