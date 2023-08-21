@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_c/controller/question_controller.dart';
 import 'package:m_c/data/questionData.dart';
+import 'package:m_c/screens/result_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
@@ -29,6 +30,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
   final PageController _pageController = PageController();
 
   QuestionController questionController = Get.put(QuestionController());
+  CarouselController carouselController = CarouselController();
 
   int activeIndex = 0;
   List<String> videos = [
@@ -138,7 +140,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
       alignment: Alignment.bottomCenter,
       child: AnimatedSmoothIndicator(
         activeIndex: activeIndex,
-        count: videos.length,
+        count: questionController.captions.length,
+        onDotClicked: (index) {
+          carouselController.jumpToPage(index);
+        },
         effect: ScaleEffect(
             dotHeight: 25,
             dotWidth: 25,
@@ -167,6 +172,8 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                     alignment: Alignment.bottomCenter,
                     children: <Widget>[
                       CarouselSlider.builder(
+                        // Set carousel controller
+                        carouselController: carouselController,
                         options: CarouselOptions(
                           height: MediaQuery.of(context).size.height * 0.5,
                           initialPage: 0,
@@ -182,10 +189,6 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                           return imageSlider(path, index);
                         },
                       ),
-                      // Align(
-                      //   alignment: Alignment.topCenter,
-                      //   child: indicator(),
-                      // ),
                       Positioned(
                         width: MediaQuery.of(context).size.width * 0.6,
                         bottom: 10,
@@ -248,6 +251,19 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                       ElevatedButton(
                         onPressed: () {
                           print('Next');
+                          if (activeIndex >=
+                              questionController.captions.length - 1) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                // Pass the http.Client
+                                builder: (context) => const ResultScreen(),
+                              ),
+                            );
+                          }
+                          carouselController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.linear);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
@@ -259,9 +275,11 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                                 horizontal: 50, vertical: 30),
                           ),
                         ),
-                        child: const Text(
-                          '다음 >',
-                          style: TextStyle(
+                        child: Text(
+                          activeIndex >= questionController.captions.length - 1
+                              ? '완료'
+                              : '다음 >',
+                          style: const TextStyle(
                             fontSize: 35,
                             fontWeight: FontWeight.bold,
                           ),
