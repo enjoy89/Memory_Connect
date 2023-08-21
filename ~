@@ -1,0 +1,17 @@
+feat: 영상 넘기기
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Mon Aug 21 11:26:21 2023 +0900
+#
+# On branch frontend-davin
+# Your branch is ahead of 'origin/frontend-davin' by 1 commit.
+#   (use "git push" to publish your local commits)
+#
+# Changes to be committed:
+#	modified:   lib/screens/new_quiz_screen.dart
+#
+# Changes not staged for commit:
+#	modified:   lib/main.dart
+#
