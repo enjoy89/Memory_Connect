@@ -82,15 +82,29 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                '안녕하세요!',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                'AI Leo와',
+                style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               const Text(
-                ' ⬇️ AI 대화 어쩌구 저쩌구 ⬇️',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                '인지 기능을',
+                style: TextStyle(
+                  color: Colors.deepPurple,
+                  fontSize: 60,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                '평가해 보세요!',
+                style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(
-                height: 50,
+                height: 70,
               ),
               ElevatedButton(
                 onPressed: () async {
