@@ -21,13 +21,16 @@ public class GptController {
     private final ChatgptService chatgptService;
 
     /**
-     * Chat GPT와 간단한 채팅 서비스
+     * Chat GPT와 간단한 채팅 서비스 프론트에서 호출하게됨
      */
-    @PostMapping("/{id}")
+    @PostMapping("/{id}") // 여기서 id는 질문의 id ex) id == 1 => 이름은 무엇인가요?
     public ResponseEntity<String> sendMessageToGPT(@PathVariable int id) {
-        System.out.println("*****sendMessageToGPT******");
-        System.out.println(id);
-        System.out.println("***********");
+        boolean ResultQuestion =speechToTextService.makeQuestion(id).toString().contains("1");
+        /**
+         * 2023/08/21 Gpt에게 질문을 보낸후 0혹은 1로 이루어진 답변을 저장한다.
+         * */
+        questionService.saveAnswerResult(id,ResultQuestion);
+        //자 여기까지 됐어 그럼 이 ResultQuestion을 어디에 저장하느냐 인데
         return ResponseEntity.ok(speechToTextService.makeQuestion(id));
     }
 

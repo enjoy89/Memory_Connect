@@ -29,28 +29,18 @@ public class SpeechToTextService {
         return chatgptService.sendMessage(question);
     }
 
+
     /**
      * DB에 존재하는 질문 데이터와 사용자 답변 데이터를 불러온 후, 이를 프롬포트와 적절하게 조합하여 반환한다.
      */
     public String makeQuestion(int testId) {
-        System.out.println("*****makeQuestion******");
-        System.out.println(testRepository.findById(testId));
-        System.out.println("***********");
         Test test = testRepository.findById(testId)
                 .orElseThrow(() -> new EntityNotFoundException("test not found"));
 
-        System.out.println("*****Answer******");
-        System.out.println(testRepository.findById(testId));
-        System.out.println("***********");
+
         Answer answer = answerRepository.findByTest(test);
-        System.out.println("******test.getQuestion()*****");
-        System.out.println(test.getQuestion());
         String test_question = BASE_Question + test.getQuestion();
-        System.out.println("******answer.getContent()*****");
-        System.out.println(answer.getContent());
         String member_response = BASE_Answer + answer.getContent();
-
-
         String question = BASE_PROMPT + test_question + member_response;
         log.info(question);
 

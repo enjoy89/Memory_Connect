@@ -1,5 +1,6 @@
 package com.memory.connect.controller;
 
+import com.memory.connect.model.answerResult.entity.AnswerResult;
 import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.service.DataService;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +27,20 @@ public class DataController {
             log.info("Test Question: " + test.getQuestion());
         }
         return questionService.getAllData();
+    }
+    /**
+     * 0821/추가된 to front api
+     *
+     * */
+    @GetMapping("/result")
+    public int getResult(){
+        List<AnswerResult> resultData = questionService.getResult();
+        int resultTrue = 0; //정답의 갯수
+        for (AnswerResult ar : resultData) {
+            if (ar.isGpt_result() == true)
+                resultTrue++;
+        }
+        return resultTrue;
     }
 
     @GetMapping("/data/{id}")
