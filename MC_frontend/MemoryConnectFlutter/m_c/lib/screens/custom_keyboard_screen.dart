@@ -64,7 +64,6 @@ class _CustomKeyboardScreenState extends State<CustomKeyboardScreen> {
         Expanded(
           child: TextButton(
             onPressed: () {
-              print(amount);
               questionController.tempAnswer.value = amount;
               Navigator.of(context).pop();
             },
@@ -115,8 +114,8 @@ class _CustomKeyboardScreenState extends State<CustomKeyboardScreen> {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: SizedBox(
-        width: 400,
-        height: 450,
+        width: MediaQuery.of(context).size.width / 1.5,
+        height: MediaQuery.of(context).size.height / 1.5,
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
