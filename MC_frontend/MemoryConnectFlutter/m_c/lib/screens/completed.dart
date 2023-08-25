@@ -33,75 +33,77 @@ class _TestState extends State<Completed> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SingleChildScrollView(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Lottie.network(
-              'https://lottie.host/0e0dcdb6-764d-4152-9c67-cd713b147b41/dKqbBwf4gC.json', // Lottie 애니메이션 파일 경로
-              width: 300,
-              height: 300,
-              controller: _controller, // AnimationController 연결
-              onLoaded: (composition) {
-                _controller.addStatusListener((status) {
-                  if (status == AnimationStatus.completed) {
-                    setState(() {
-                      _animationCompleted = true; // 애니메이션 완료 시 상태 업데이트
-                      _controller.stop();
-                    });
-                  }
-                });
-              },
-            ),
-            Text(
-              '완료되었습니다.',
-              style: TextStyle(
-                fontSize: 50,
-                color: Colors.deepPurple.shade900,
-                fontWeight: FontWeight.bold,
+        child: Center(
+          child: Column(
+            children: [
+              Lottie.network(
+                'https://lottie.host/0e0dcdb6-764d-4152-9c67-cd713b147b41/dKqbBwf4gC.json', // Lottie 애니메이션 파일 경로
+                width: 300,
+                height: 300,
+                controller: _controller, // AnimationController 연결
+                onLoaded: (composition) {
+                  _controller.addStatusListener((status) {
+                    if (status == AnimationStatus.completed) {
+                      setState(() {
+                        _animationCompleted = true; // 애니메이션 완료 시 상태 업데이트
+                        _controller.stop();
+                      });
+                    }
+                  });
+                },
               ),
-            ),
-            const SizedBox(
-              height: 50,
-            ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const ResultScreen()),
-                );
-              },
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(
-                  const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
-                ),
-              ),
-              child: const Text(
-                '결과 보기',
+              Text(
+                '완료되었습니다.',
                 style: TextStyle(
-                  fontSize: 35,
+                  fontSize: 50,
+                  color: Colors.deepPurple.shade900,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            ElevatedButton(
-              onPressed: () {},
-              style: ButtonStyle(
-                padding: MaterialStateProperty.all<EdgeInsets>(
-                  const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+              const SizedBox(
+                height: 50,
+              ),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ResultScreen()),
+                  );
+                },
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                    const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+                  ),
+                ),
+                child: const Text(
+                  '결과 보기',
+                  style: TextStyle(
+                    fontSize: 35,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
               ),
-              child: const Text(
-                '결과 전송하기',
-                style: TextStyle(
-                  fontSize: 35,
-                  fontWeight: FontWeight.bold,
-                ),
+              const SizedBox(
+                height: 20,
               ),
-            )
-          ],
+              // ElevatedButton(
+              //   onPressed: () {},
+              //   style: ButtonStyle(
+              //     padding: MaterialStateProperty.all<EdgeInsets>(
+              //       const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+              //     ),
+              //   ),
+              //   child: const Text(
+              //     '결과 전송하기',
+              //     style: TextStyle(
+              //       fontSize: 35,
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //   ),
+              // )
+            ],
+          ),
         ),
       ),
     );
