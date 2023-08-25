@@ -115,9 +115,8 @@ class _MyHomePageState extends State<MyHomePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      // builder: (context) => NewQuizScreen(
-                      //     httpClient: httpClient), // Pass the http.Client
                       builder: (context) => const Loading(),
+                      // builder: (context) => const ResultScreen(),
                     ),
                   );
                 },
