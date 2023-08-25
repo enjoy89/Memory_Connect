@@ -14,6 +14,12 @@ public class RequestData {
     private String voiceText;
     private String memberName;
 
+    /**
+     * Front에서 주는 형식대로 정의해줌
+     * @param testId
+     * @param voiceText
+     * @param memberName
+     */
     @Builder
     public RequestData(int testId, String voiceText, String memberName) {
         this.testId = testId;

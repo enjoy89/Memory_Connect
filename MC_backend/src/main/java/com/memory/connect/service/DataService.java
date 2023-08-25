@@ -36,16 +36,17 @@ public class DataService {
         Test test = testRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Test not found with id: " + id));
 
-        int memberId = memberRepository.findByName(requestData.getMemberName());
+        Member member = memberRepository.findByName(requestData.getMemberName());
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new EntityNotFoundException("Member not found with id: " + id));
 
         return answerRepository.save(requestData.toEntity(test, member, gpt_result));
     }
 
     public List<Test> getAllData() {
         return testRepository.findAll();
+    }
+    public List<Answer> getAllAnswer() {
+        return answerRepository.findAll();
     }
 
     public Test getDataById(int id) {

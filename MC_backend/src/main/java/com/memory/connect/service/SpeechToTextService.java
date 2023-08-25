@@ -33,13 +33,12 @@ public class SpeechToTextService {
     /**
      * DB에 존재하는 질문 데이터와 사용자 답변 데이터를 불러온 후, 이를 프롬포트와 적절하게 조합하여 반환한다.
      */
-    public String makeQuestion(int testId) {
+    public String makeQuestion(int testId , String receivedText) {
         Test test = testRepository.findById(testId)
                 .orElseThrow(() -> new EntityNotFoundException("test not found"));
 
-        Answer answer = answerRepository.findByTest(test);
         String test_question = BASE_Question + test.getQuestion();
-        String member_response = BASE_Answer + answer.getContent();
+        String member_response = BASE_Answer + receivedText;
         String question = BASE_PROMPT + test_question + member_response;
         log.info(question);
 
