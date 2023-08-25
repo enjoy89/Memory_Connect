@@ -40,22 +40,20 @@ class _LoadingResultState extends State<LoadingResult>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xff7DBC85),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Lottie.network(
-              'https://lottie.host/fb85b9bf-232c-42ac-af2f-a062f733da62/a45vzucNyR.json', // Lottie 애니메이션 파일 경로
+            Image.network(
+              "https://careerup-client.s3.ap-northeast-2.amazonaws.com/loading_logo.png",
               width: 300,
               height: 300,
             ),
-            Text(
-              '잠시만 기다려 주세요...',
-              style: TextStyle(
-                fontSize: 50,
-                color: Colors.deepPurple.shade900,
-                fontWeight: FontWeight.bold,
-              ),
+            Lottie.network(
+              'https://lottie.host/2d863168-2268-4817-80a7-dc3536060b9f/j0TWLqogSf.json', // Lottie 애니메이션 파일 경로
+              width: 100,
+              height: 100,
             ),
           ],
         ),
