@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:m_c/controller/question_controller.dart';
 import 'package:m_c/data/questionData.dart';
+import 'package:m_c/screens/custom_keyboard_screen.dart';
+import 'package:m_c/screens/drawing_popup.dart';
 import 'package:m_c/screens/loading_result.dart';
 import 'package:m_c/screens/result_screen.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -11,6 +13,8 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 import 'package:http/http.dart' as http;
 import 'package:video_player/video_player.dart';
+import 'dart:math';
+import 'dart:ui';
 
 class NewQuizScreen extends StatefulWidget {
   final http.Client httpClient; // Change this to http.Client
@@ -30,18 +34,21 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
   final int _currentCaptionIndex = 0; // 현재 출력할 자막 인덱스
   final PageController _pageController = PageController();
 
+  List<List<double>> lines = []; // 각 선마다의 x, y 좌표 리스트
+
   QuestionController questionController = Get.put(QuestionController());
   CarouselController carouselController = CarouselController();
 
   int activeIndex = 0;
   List<String> videos = [
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/지금_계신_이_장소는_어떤_곳인가요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/지금_생각나는_물건_3가지를_아무거나_말씀해주세요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/주민등록증을_주웠을때.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/1.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/2.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/3.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/4.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/5.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/6.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/7.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/8.mp4",
   ];
 
   late VideoPlayerController _controller;
@@ -115,7 +122,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
 
     return SizedBox(
       width: double.infinity,
-      height: 240,
+      height: MediaQuery.of(context).size.height / 2,
       child: FutureBuilder(
         future: _initializeVideoPlayerFuture,
         builder: (context, snapshot) {
@@ -144,12 +151,15 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
         onDotClicked: (index) {
           carouselController.jumpToPage(index);
         },
-        effect: ScaleEffect(
-            dotHeight: 25,
-            dotWidth: 25,
-            spacing: 35,
-            activeDotColor: Colors.deepPurple.shade400,
-            dotColor: Colors.deepPurple.shade100.withOpacity(0.8)),
+        effect: SlideEffect(
+          radius: 0,
+          dotHeight: 15,
+          dotWidth: (MediaQuery.of(context).size.width - 100) /
+              questionController.captions.length,
+          spacing: 0,
+          activeDotColor: const Color(0xff7DBC85),
+          dotColor: const Color(0xffE7E7E7),
+        ),
       ));
 
   //-----------------------------------------------
@@ -165,6 +175,8 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
+                  Text(
+                      "${activeIndex + 1} / ${questionController.captions.length}"),
                   const SizedBox(height: 10),
                   indicator(),
                   const SizedBox(height: 10),
@@ -175,13 +187,14 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                         // Set carousel controller
                         carouselController: carouselController,
                         options: CarouselOptions(
-                          height: MediaQuery.of(context).size.height * 0.5,
+                          height: MediaQuery.of(context).size.height / 2,
                           initialPage: 0,
                           viewportFraction: 1,
                           enlargeCenterPage: true,
                           onPageChanged: (index, reason) => setState(() {
                             activeIndex = index;
                           }),
+                          enableInfiniteScroll: false,
                         ),
                         itemCount: videos.length,
                         itemBuilder: (context, index, realIndex) {
@@ -205,7 +218,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                               style: const TextStyle(
                                 backgroundColor: Colors.black,
                                 color: Colors.white,
-                                fontSize: 35,
+                                fontSize: 25,
                               ),
                             ),
                             textAlign: TextAlign.center, // 자막 중앙 정렬
@@ -220,77 +233,173 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      ElevatedButton(
-                        onPressed: () {
-                          print('말하기');
-                          if (_speechToText.isNotListening) {
-                            questionController.isListening.value = true;
-                            _startListening();
-                            print(_lastWords);
-                          } else {
-                            questionController.isListening.value = false;
-                            _stopListening();
-                            _sendVoiceDataToApi(activeIndex + 1, _lastWords);
-                          }
-                        },
-                        style: ButtonStyle(
-                          padding: MaterialStateProperty.all<EdgeInsets>(
-                            const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 30),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 3,
+                        child: OutlinedButton(
+                          onPressed: () {},
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffFFFFFF),
+                            side: const BorderSide(
+                              color: Color(0xff75A569),
+                              width: 2,
+                            ),
+                            // 안쪽 패딩(여백)
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
                           ),
-                        ),
-                        child: Obx(
-                          () => Text(
-                            !questionController.isListening.value
-                                ? '말하기'
-                                : 'STOP',
-                            style: const TextStyle(
-                              fontSize: 35,
+                          child: const Text(
+                            '< 이전 문제',
+                            style: TextStyle(
+                              fontSize: 26,
                               fontWeight: FontWeight.bold,
+                              color: Color(0xff75A569),
                             ),
                           ),
                         ),
                       ),
-                      ElevatedButton(
-                        onPressed: () {
-                          print('Next');
-                          if (activeIndex >=
-                              questionController.captions.length - 1) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                // Pass the http.Client
-                                builder: (context) => const LoadingResult(),
-                              ),
-                            );
-                          }
-                          carouselController.nextPage(
-                              duration: const Duration(milliseconds: 300),
-                              curve: Curves.linear);
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                              Colors.deepPurple),
-                          foregroundColor: MaterialStateProperty.all<Color>(
-                              Colors.deepPurple.shade100),
-                          padding: MaterialStateProperty.all<EdgeInsets>(
-                            const EdgeInsets.symmetric(
-                                horizontal: 50, vertical: 30),
+                      OutlinedButton(
+                        onPressed: () {},
+                        style: OutlinedButton.styleFrom(
+                          backgroundColor: const Color(0xffFFFFFF),
+                          side: const BorderSide(
+                            color: Color(0xffFF8282),
+                            width: 2,
+                          ),
+                          // 안쪽 패딩(여백)
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                        ),
+                        child: const Text(
+                          'O',
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xffFF8282),
                           ),
                         ),
-                        child: Text(
-                          activeIndex >= questionController.captions.length - 1
-                              ? '완료'
-                              : '다음 >',
-                          style: const TextStyle(
-                            fontSize: 35,
-                            fontWeight: FontWeight.bold,
+                      ),
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width / 3,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            print('Next');
+                            if (activeIndex >=
+                                questionController.captions.length - 1) {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  // Pass the http.Client
+                                  builder: (context) => const LoadingResult(),
+                                ),
+                              );
+                            } else {
+                              carouselController.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.linear);
+                            }
+                          },
+                          style: OutlinedButton.styleFrom(
+                            backgroundColor: const Color(0xffFFFFFF),
+                            side: const BorderSide(
+                              color: Color(0xff75A569),
+                              width: 2,
+                            ),
+                            // 안쪽 패딩(여백)
+                            padding: const EdgeInsets.symmetric(
+                                vertical: 20, horizontal: 20),
+                          ),
+                          child: Text(
+                            activeIndex >=
+                                    questionController.captions.length - 1
+                                ? '완료'
+                                : '다음 문제 >',
+                            style: const TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff75A569),
+                            ),
                           ),
                         ),
                       ),
                     ],
                   ),
                 ],
+              ),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: MediaQuery.of(context).size.width - 100,
+              child: OutlinedButton(
+                onPressed: () {
+                  if (activeIndex == 6) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const DrawingPopup(),
+                    );
+                    _sendVoiceDataToApi(
+                        activeIndex + 1, questionController.tempAnswer.value);
+                  } else if (activeIndex == 4) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => const CustomKeyboardScreen(),
+                    );
+                    _sendVoiceDataToApi(activeIndex + 1, "오각형");
+                  } else {
+                    print('말하기');
+                    if (_speechToText.isNotListening) {
+                      questionController.isListening.value = true;
+                      _startListening();
+                      print(_lastWords);
+                    } else {
+                      questionController.isListening.value = false;
+                      _stopListening();
+                      _sendVoiceDataToApi(activeIndex + 1, _lastWords);
+                    }
+                  }
+                },
+                style: OutlinedButton.styleFrom(
+                  //메인 색상
+                  backgroundColor: const Color(0xffFFFFFF),
+                  // 테두리
+                  side: const BorderSide(
+                    color: Color(0xff75A569),
+                    width: 2,
+                  ),
+                  // 안쪽 패딩(여백)
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                ),
+                child: Obx(
+                  () {
+                    if (activeIndex == 6) {
+                      return const Text(
+                        '그리기',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff75A569),
+                        ),
+                      );
+                    } else if (activeIndex == 4) {
+                      return const Text(
+                        '입력하기',
+                        style: TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff75A569),
+                        ),
+                      );
+                    } else {
+                      return Text(
+                        !questionController.isListening.value ? '말하기' : 'STOP',
+                        style: const TextStyle(
+                          fontSize: 32,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff75A569),
+                        ),
+                      );
+                    }
+                  },
+                ),
               ),
             ),
             const SizedBox(height: 20),

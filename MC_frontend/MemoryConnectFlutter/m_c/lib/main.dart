@@ -79,7 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffFFFDF6),
+      backgroundColor: const Color(0xffFFFDF6),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -90,11 +90,11 @@ class _MyHomePageState extends State<MyHomePage> {
             width: 100,
             height: 100,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30),
+          const Padding(
+            padding: EdgeInsets.only(left: 30),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: const Text(
+              child: Text(
                 '안녕하세요,\n저희 대화할까요?',
                 textAlign: TextAlign.left,
                 style: TextStyle(
@@ -104,14 +104,14 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 20,
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30),
+          const Padding(
+            padding: EdgeInsets.only(left: 30),
             child: Align(
               alignment: Alignment.centerLeft,
-              child: const Text(
+              child: Text(
                 '영상통화를 하고 싶다면\n눌러주세요 :)',
                 style: TextStyle(
                     fontSize: 20,
@@ -152,7 +152,7 @@ class _MyHomePageState extends State<MyHomePage> {
               shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(50.0),
-                  side: BorderSide(color: Color(0xff75A569)), // 테두리 색상
+                  side: const BorderSide(color: Color(0xff75A569)), // 테두리 색상
                 ),
               ),
             ),
