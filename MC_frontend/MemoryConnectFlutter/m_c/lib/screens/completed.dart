@@ -87,21 +87,6 @@ class _TestState extends State<Completed> with SingleTickerProviderStateMixin {
               const SizedBox(
                 height: 20,
               ),
-              // ElevatedButton(
-              //   onPressed: () {},
-              //   style: ButtonStyle(
-              //     padding: MaterialStateProperty.all<EdgeInsets>(
-              //       const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
-              //     ),
-              //   ),
-              //   child: const Text(
-              //     '결과 전송하기',
-              //     style: TextStyle(
-              //       fontSize: 35,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // )
             ],
           ),
         ),

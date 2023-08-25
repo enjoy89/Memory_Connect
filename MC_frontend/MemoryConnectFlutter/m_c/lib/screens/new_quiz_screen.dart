@@ -122,7 +122,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
 
     return SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 2,
+      height: MediaQuery.of(context).size.height / 1.5,
       child: FutureBuilder(
         future: _initializeVideoPlayerFuture,
         builder: (context, snapshot) {
@@ -187,7 +187,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                         // Set carousel controller
                         carouselController: carouselController,
                         options: CarouselOptions(
-                          height: MediaQuery.of(context).size.height / 2,
+                          height: MediaQuery.of(context).size.height / 1.5,
                           initialPage: 0,
                           viewportFraction: 1,
                           enlargeCenterPage: true,
@@ -336,14 +336,14 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                       context: context,
                       builder: (context) => const DrawingPopup(),
                     );
-                    _sendVoiceDataToApi(
-                        activeIndex + 1, questionController.tempAnswer.value);
+                    _sendVoiceDataToApi(activeIndex + 1, "오각형");
                   } else if (activeIndex == 4) {
                     showDialog(
                       context: context,
                       builder: (context) => const CustomKeyboardScreen(),
                     );
-                    _sendVoiceDataToApi(activeIndex + 1, "오각형");
+                    _sendVoiceDataToApi(
+                        activeIndex + 1, questionController.tempAnswer.value);
                   } else {
                     print('말하기');
                     if (_speechToText.isNotListening) {
