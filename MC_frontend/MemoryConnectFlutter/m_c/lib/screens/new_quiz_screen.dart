@@ -89,9 +89,9 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    setState(() {
-      _lastWords = result.recognizedWords;
-    });
+    //setState(() {
+    _lastWords = result.recognizedWords;
+    //});
   }
 
   // 여기는 Front to Back 음성데이터를 testId와 voiceText JSON형식으로 전송함
@@ -246,6 +246,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                             // 안쪽 패딩(여백)
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 20),
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(color: Color(0xff75A569)),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                           ),
                           child: const Text(
                             '< 이전 문제',
@@ -307,6 +311,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                             // 안쪽 패딩(여백)
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 20),
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(color: Color(0xff75A569)),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                           ),
                           child: Text(
                             activeIndex >=
@@ -337,13 +345,13 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                       builder: (context) => const DrawingPopup(),
                     );
                     _sendVoiceDataToApi(activeIndex + 1, "오각형");
+                  } else if (activeIndex == 5) {
+                    _sendVoiceDataToApi(5, questionController.tempAnswer.value);
                   } else if (activeIndex == 4) {
                     showDialog(
                       context: context,
                       builder: (context) => const CustomKeyboardScreen(),
                     );
-                    _sendVoiceDataToApi(
-                        activeIndex + 1, questionController.tempAnswer.value);
                   } else {
                     print('말하기');
                     if (_speechToText.isNotListening) {
@@ -354,6 +362,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                       questionController.isListening.value = false;
                       _stopListening();
                       _sendVoiceDataToApi(activeIndex + 1, _lastWords);
+                      print("${activeIndex + 1} : $_lastWords");
                     }
                   }
                 },
@@ -367,6 +376,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                   ),
                   // 안쪽 패딩(여백)
                   padding: const EdgeInsets.symmetric(vertical: 20),
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Color(0xff75A569)),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                 ),
                 child: Obx(
                   () {
