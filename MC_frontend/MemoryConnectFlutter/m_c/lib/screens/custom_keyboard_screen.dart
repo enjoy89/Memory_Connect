@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_c/controller/question_controller.dart';
 import 'package:m_c/screens/keyboardkey.dart';
 
 class CustomKeyboardScreen extends StatefulWidget {
@@ -10,6 +12,7 @@ class CustomKeyboardScreen extends StatefulWidget {
 
 class _CustomKeyboardScreenState extends State<CustomKeyboardScreen> {
   late String amount;
+  QuestionController questionController = Get.put(QuestionController());
 
   @override
   void initState() {
@@ -62,6 +65,7 @@ class _CustomKeyboardScreenState extends State<CustomKeyboardScreen> {
           child: TextButton(
             onPressed: () {
               print(amount);
+              questionController.tempAnswer.value = amount;
               Navigator.of(context).pop();
             },
             style: TextButton.styleFrom(

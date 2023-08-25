@@ -5,4 +5,6 @@ class QuestionController extends GetxController {
   RxList videoUrl = [].obs; // 비디오 주소
 
   RxBool isListening = false.obs;
+
+  RxString tempAnswer = "".obs;
 }

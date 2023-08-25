@@ -41,13 +41,14 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
 
   int activeIndex = 0;
   List<String> videos = [
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/지금_계신_이_장소는_어떤_곳인가요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/지금_생각나는_물건_3가지를_아무거나_말씀해주세요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/주민등록증을_주웠을때.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
-    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/성함을_말씀해주세요.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/1.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/2.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/3.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/4.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/5.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/6.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/7.mp4",
+    "https://careerup-client.s3.ap-northeast-2.amazonaws.com/8.mp4",
   ];
 
   late VideoPlayerController _controller;
@@ -130,12 +131,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
             _controller.value.duration.inMilliseconds;
             return AspectRatio(
               aspectRatio: _controller.value.aspectRatio,
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(50), //모서리를 둥글게
-                    border: Border.all(color: Colors.black12, width: 3)),
-                child: VideoPlayer(_controller),
-              ),
+              child: VideoPlayer(_controller),
             );
           } else {
             print(snapshot.error);
@@ -222,7 +218,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                               style: const TextStyle(
                                 backgroundColor: Colors.black,
                                 color: Colors.white,
-                                fontSize: 35,
+                                fontSize: 25,
                               ),
                             ),
                             textAlign: TextAlign.center, // 자막 중앙 정렬
@@ -335,16 +331,19 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
               width: MediaQuery.of(context).size.width - 100,
               child: OutlinedButton(
                 onPressed: () {
-                  if (activeIndex == 3) {
+                  if (activeIndex == 6) {
                     showDialog(
                       context: context,
                       builder: (context) => const DrawingPopup(),
                     );
+                    _sendVoiceDataToApi(
+                        activeIndex + 1, questionController.tempAnswer.value);
                   } else if (activeIndex == 4) {
                     showDialog(
                       context: context,
                       builder: (context) => const CustomKeyboardScreen(),
                     );
+                    _sendVoiceDataToApi(activeIndex + 1, "오각형");
                   } else {
                     print('말하기');
                     if (_speechToText.isNotListening) {
@@ -354,7 +353,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                     } else {
                       questionController.isListening.value = false;
                       _stopListening();
-                      //_sendVoiceDataToApi(activeIndex + 1, _lastWords);
+                      _sendVoiceDataToApi(activeIndex + 1, _lastWords);
                     }
                   }
                 },
@@ -371,7 +370,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                 ),
                 child: Obx(
                   () {
-                    if (activeIndex == 3) {
+                    if (activeIndex == 6) {
                       return const Text(
                         '그리기',
                         style: TextStyle(
