@@ -43,6 +43,10 @@ dependencies:
   json_annotation:
   http: ^1.1.0
   video_player: ^2.7.0
+  smooth_page_indicator: ^1.1.0
+  carousel_slider: ^4.2.1
+  get: ^4.6.5
+  lottie: ^2.6.0
 
 dev_dependencies:
   flutter_test:

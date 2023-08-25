@@ -1,7 +1,16 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http; // Import the http package
+import 'package:m_c/controller/question_controller.dart';
+import 'package:m_c/screens/loading.dart';
+import 'package:m_c/screens/loading_result.dart';
+import 'package:m_c/screens/new_quiz_screen.dart';
 import 'package:m_c/screens/pre_question_screen.dart';
 import 'package:m_c/screens/quiz_screen.dart';
+import 'package:m_c/data/questionData.dart';
 
 void main() {
   runApp(const MyApp());
@@ -29,6 +38,8 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   late final http.Client httpClient; // Declare the http.Client object
+  QuestionController questionController = Get.put(
+      QuestionController()); // Rather Controller controller = Controller();
 
   @override
   void initState() {
@@ -42,6 +53,28 @@ class _MyHomePageState extends State<MyHomePage> {
     super.dispose();
   }
 
+  //Back to Front / 질문을 받아와서 자막과 같이 보여주는 역할
+  Future<void> fetchDataAndShowCaptions() async {
+    final response =
+        await http.get(Uri.parse('http://localhost:8088/api/data'));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonData =
+          json.decode(utf8.decode(response.bodyBytes)); // UTF-8 디코딩 추가
+      questionController.captions.clear();
+      for (var data in jsonData) {
+        final question = questionData.fromJson(data).testQuestion;
+        questionController.captions.add(question); // 질문을 자막에 추가
+      }
+      print("Back to Front Complete!!!!");
+      print("축하드립니다람쥐 춤을 추세요");
+    } else {
+      print("자막 생성 문제가 발생했습니다 Error Code:");
+      print(response.statusCode);
+      throw Exception('Failed to load data');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,24 +84,40 @@ class _MyHomePageState extends State<MyHomePage> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const Text(
-                '안녕하세요!',
-                style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+                'AI Leo와',
+                style: TextStyle(
+                  fontSize: 35,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
               const Text(
-                ' ⬇️ AI 대화 어쩌구 저쩌구 ⬇️',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                '인지 기능을',
+                style: TextStyle(
+                  color: Colors.deepPurple,
+                  fontSize: 60,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const Text(
+                '평가해 보세요!',
+                style: TextStyle(
+                  fontSize: 50,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const SizedBox(
-                height: 50,
+                height: 70,
               ),
               ElevatedButton(
-                onPressed: () {
+                onPressed: () async {
+                  await fetchDataAndShowCaptions(); // 자막 데이터 불러와서 저장.
+                  print(questionController.captions.length);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => QuizScreen(
-                          httpClient: httpClient), // Pass the http.Client
-                      //builder: (context) => const PreQuestionScreen(),
+                      // builder: (context) => NewQuizScreen(
+                      //     httpClient: httpClient), // Pass the http.Client
+                      builder: (context) => const Loading(),
                     ),
                   );
                 },
