@@ -21,12 +21,8 @@ public class Test {
     @Column(name = "test_question", columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String question;
 
-    @Column(name ="test_type", columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
-    private String type;
-
     @Builder
     public Test(String question, String type) {
         this.question = question;
-        this.type = type;
     }
 }

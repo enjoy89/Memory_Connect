@@ -1,6 +1,6 @@
 package com.memory.connect.controller;
 
-import com.memory.connect.model.answerResult.entity.AnswerResult;
+import com.memory.connect.model.testResult.entity.TestResult;
 import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.service.DataService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +18,9 @@ public class DataController {
     //CORS 설정
     private final DataService questionService;
 
+    /**
+     * Test Table의 question 데이터를 모두 조회
+     */
     @GetMapping("/data")
     public List<Test> getAllData() {
         List<Test> testData = questionService.getAllData();
@@ -28,21 +31,24 @@ public class DataController {
         }
         return questionService.getAllData();
     }
+
     /**
-     * 0821/추가된 to front api
-     *
-     * */
+     * 테스트 최종 결과 점수를 조회
+     */
     @GetMapping("/result")
-    public int getResult(){
-        List<AnswerResult> resultData = questionService.getResult();
+    public int getResult() {
+        List<TestResult> resultData = questionService.getResult();
         int resultTrue = 0; //정답의 갯수
-        for (AnswerResult ar : resultData) {
+        for (TestResult ar : resultData) {
             if (ar.isGpt_result() == true)
                 resultTrue++;
         }
         return resultTrue;
     }
 
+    /**
+     * 질문 단건 조회
+     */
     @GetMapping("/data/{id}")
     public Test getDataById(@PathVariable int id) {
         return questionService.getDataById(id);
