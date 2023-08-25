@@ -2,6 +2,7 @@ package com.memory.connect.model.answer.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.memory.connect.model.base.BaseTimeEntity;
+import com.memory.connect.model.member.entity.Member;
 import com.memory.connect.model.test.entity.Test;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -21,6 +22,9 @@ public class Answer extends BaseTimeEntity {
     @Column(name = "answer_id")
     private int id;
 
+    /**
+     * 답변 내용
+     */
     @Column(name = "answer_content",columnDefinition = "VARCHAR(255) CHARACTER SET UTF8")
     private String content;
 
@@ -29,9 +33,19 @@ public class Answer extends BaseTimeEntity {
     @JsonIgnore
     private Test test;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    @JsonIgnore
+    private Member member;
+
+    @Column(name = "gpt_result")
+    private boolean gpt_result;
+
     @Builder
-    public Answer(String content, Test test) {
+    public Answer(String content, Test test, Member member, boolean gpt_result) {
         this.content = content;
         this.test = test;
+        this.member = member;
+        this.gpt_result = gpt_result;
     }
 }

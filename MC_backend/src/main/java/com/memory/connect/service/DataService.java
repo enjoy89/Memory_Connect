@@ -1,8 +1,9 @@
 package com.memory.connect.service;
 
-
 import com.memory.connect.model.answer.entity.Answer;
 import com.memory.connect.model.answer.repository.AnswerRepository;
+import com.memory.connect.model.member.entity.Member;
+import com.memory.connect.model.member.repository.MemberRepository;
 import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.model.test.repository.TestRepository;
 import com.memory.connect.service.dto.RequestData;
@@ -17,7 +18,7 @@ import java.util.List;
 @Slf4j
 @RequiredArgsConstructor
 public class DataService {
-
+    private final MemberRepository memberRepository;
     private final TestRepository testRepository;
     private final AnswerRepository answerRepository;
 
@@ -31,14 +32,21 @@ public class DataService {
                 .orElseThrow(() -> new EntityNotFoundException("Answer not found with questionId: " + questionId));
     }
 
-    public Answer saveAnswer(int id, RequestData requestData) {
+    public Answer saveAnswer(int id, RequestData requestData, boolean gpt_result) {
         Test test = testRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Test not found with id: " + id));
-        return answerRepository.save(requestData.toEntity(test));
+
+        Member member = memberRepository.findByName(requestData.getMemberName());
+
+
+        return answerRepository.save(requestData.toEntity(test, member, gpt_result));
     }
 
     public List<Test> getAllData() {
         return testRepository.findAll();
+    }
+    public List<Answer> getAllAnswer() {
+        return answerRepository.findAll();
     }
 
     public Test getDataById(int id) {
