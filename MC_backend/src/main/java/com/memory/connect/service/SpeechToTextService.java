@@ -10,14 +10,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.time.LocalDate;
 
 @Service
 @RequiredArgsConstructor
 @Slf4j
 public class SpeechToTextService {
-    private final String BASE_PROMPT = "너는 내가 제시한 질문에 대한 적절한 답변을 할 수 있는지 확인해주는거야. 답변이 적절하다면 1을, 그렇지 않다면 0을 반환해줘.";
+    private final String BASE_PROMPT = "너는 내가 제시한 질문에 대한 답변이 맞는 말인지 확인해줘. 답변이 옳다면 1을, 그렇지 않다면 0을 반환해줘. 1과 0이외에는 절대 다른대답은 필요없어\n";
     private final String BASE_Question = "질문: ";
-    private final String BASE_Answer = "답변: ";
+    private final String BASE_Answer = "\n답변: ";
     private final String BEFORE_Answer = "이전 답변: ";
     private final ChatgptService chatgptService;
     private final TestRepository testRepository;
@@ -39,6 +40,10 @@ public class SpeechToTextService {
 
         String test_question = BASE_Question + test.getQuestion();
         String member_response = BASE_Answer + receivedText;
+        if (testId == 2){
+            LocalDate now = LocalDate.now();
+            test_question = "질문:" + now + "의 요일은?";
+        }
         String question = BASE_PROMPT + test_question + member_response;
         log.info(question);
 

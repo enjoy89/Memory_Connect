@@ -3,7 +3,7 @@ insert into test(test_id, test_question)
 values(1, "성함을 말씀해주세요.");
 
 insert into test(test_id, test_question)
-values(2, "오늘이 몇 월 며칠인지 말씀해주세요.");
+values(2, "오늘이 무슨 요일인지 말씀해주세요.");
 
 insert into test(test_id, test_question)
 values(3, "지금 계신 이 장소는 어떤 곳인가요?");
