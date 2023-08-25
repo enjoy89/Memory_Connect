@@ -1,6 +1,6 @@
 package com.memory.connect.controller;
 
-import com.memory.connect.model.testResult.entity.TestResult;
+import com.memory.connect.model.answer.entity.Answer;
 import com.memory.connect.model.test.entity.Test;
 import com.memory.connect.service.DataService;
 import lombok.RequiredArgsConstructor;
@@ -32,19 +32,19 @@ public class DataController {
         return questionService.getAllData();
     }
 
-    /**
-     * 테스트 최종 결과 점수를 조회
-     */
-    @GetMapping("/result")
-    public int getResult() {
-        List<TestResult> resultData = questionService.getResult();
-        int resultTrue = 0; //정답의 갯수
-        for (TestResult ar : resultData) {
-            if (ar.isGpt_result() == true)
-                resultTrue++;
-        }
-        return resultTrue;
-    }
+//    /**
+//     * 테스트 최종 결과 점수를 조회
+//     */
+//    @GetMapping("/result")
+//    public int getResult() {
+//        List<Answer> resultData = questionService;
+//        int resultTrue = 0; //정답의 갯수
+//        for (TestResult ar : resultData) {
+//            if (ar.isGpt_result() == true)
+//                resultTrue++;
+//        }
+//        return resultTrue;
+//    }
 
     /**
      * 질문 단건 조회

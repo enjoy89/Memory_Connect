@@ -38,10 +38,14 @@ public class Answer extends BaseTimeEntity {
     @JsonIgnore
     private Member member;
 
+    @Column(name = "gpt_result")
+    private boolean gpt_result;
+
     @Builder
-    public Answer(String content, Test test, Member member) {
+    public Answer(String content, Test test, Member member, boolean gpt_result) {
         this.content = content;
         this.test = test;
         this.member = member;
+        this.gpt_result = gpt_result;
     }
 }
