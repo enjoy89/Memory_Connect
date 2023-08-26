@@ -133,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
           ElevatedButton(
             onPressed: () async {
-              //await fetchDataAndShowCaptions(); // 자막 데이터 불러와서 저장.
+              await fetchDataAndShowCaptions(); // 자막 데이터 불러와서 저장.
               print(questionController.captions.length);
               Navigator.push(
                 context,
