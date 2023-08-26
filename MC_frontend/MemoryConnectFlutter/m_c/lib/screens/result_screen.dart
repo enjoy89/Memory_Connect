@@ -60,8 +60,11 @@ class _ResultScreenState extends State<ResultScreen> {
               ],
             ),
             Container(
-              decoration: BoxDecoration(color: Colors.white),
-              width: 300,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              // borderRadius: BorderRadius.all(Radius.circular(50))),
+              width: MediaQuery.of(context).size.width,
               height: 300,
               child: Image.network(
                 "https://careerup-client.s3.ap-northeast-2.amazonaws.com/result.png",
@@ -69,17 +72,20 @@ class _ResultScreenState extends State<ResultScreen> {
                 height: 300,
               ),
             ),
+            SizedBox(
+              height: 20,
+            ),
             Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height / 1.5,
               decoration: BoxDecoration(
-                color: const Color(0xfff4f4f4),
-                borderRadius: const BorderRadius.vertical(
-                    top: Radius.circular(50)), //모서리를 둥글게
-                border: Border.all(
-                  color: const Color(0xffFFFDF6),
-                  width: 3,
-                ),
+                color: const Color(0xffFFFDF6),
+                // borderRadius: const BorderRadius.vertical(
+                //     top: Radius.circular(50)), //모서리를 둥글게
+                // border: Border.all(
+                //   color: const Color(0xffFFFDF6),
+                //   width: 3,
+                //),
               ),
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
