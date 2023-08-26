@@ -2,6 +2,7 @@ package com.memory.connect.controller;
 
 import com.memory.connect.model.answer.entity.Answer;
 import com.memory.connect.model.answer.repository.AnswerRepository;
+import com.memory.connect.model.member.entity.Member;
 import com.memory.connect.model.test.repository.TestRepository;
 import com.memory.connect.service.DataService;
 import com.memory.connect.service.SpeechToTextService;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
@@ -38,8 +40,16 @@ public class GptController {
         //여기로 test_id가 들어오게됨
         String receivedText = requestData.getVoiceText();
         int receivedTestId = requestData.getTestId();
+        String receivedMemberName = requestData.getMemberName();
+        /**
+         * 만약 testId가 1이라면 어떤 이름이 뭔지 사용자 설정으로 넣어줌
+         * receivedMemberName를 가져와서 모든 멤버리스트를 가져와서 일치하는 멤버 번호 리턴
+         * */
+
+
 
         String ResultQuestion = speechToTextService.makeQuestion(receivedTestId, receivedText);
         return ResponseEntity.ok(questionService.saveAnswer(receivedTestId, requestData, ResultQuestion.contains("1")));
     }
+
 }

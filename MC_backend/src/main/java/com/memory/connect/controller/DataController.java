@@ -29,7 +29,7 @@ public class DataController {
             log.info("Test ID: " + test.getId());
             log.info("Test Question: " + test.getQuestion());
         }
-        return questionService.getAllData();
+        return testData.subList(0,8);
     }
 
     /**
