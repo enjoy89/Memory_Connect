@@ -42,11 +42,15 @@ public class DataService {
         return answerRepository.save(requestData.toEntity(test, member, gpt_result));
     }
 
+
     public List<Test> getAllData() {
         return testRepository.findAll();
     }
     public List<Answer> getAllAnswer() {
         return answerRepository.findAll();
+    }
+    public List<Member> getAllMember() {
+        return memberRepository.findAll();
     }
 
     public Test getDataById(int id) {

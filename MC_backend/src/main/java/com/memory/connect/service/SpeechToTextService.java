@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 @Slf4j
 public class SpeechToTextService {
-    private final String BASE_PROMPT = "너는 내가 제시한 질문에 대한 답변이 맞는 말인지 확인해줘. 답변이 옳다면 1을, 그렇지 않다면 0을 반환해줘. 1과 0이외에는 절대 다른대답은 필요없어\n";
+    private final String BASE_PROMPT = "내가 제시한 질문에 대한 답변이 맞는 말인지 확인해줘. 답변이 옳다면 1을, 그렇지 않다면 0을 반환해줘. 1과 0이외에는 절대 다른대답은 필요없어\n";
     private final String BASE_Question = "질문: ";
     private final String BASE_Answer = "\n답변: ";
     private final String BEFORE_Answer = "이전 답변: ";
