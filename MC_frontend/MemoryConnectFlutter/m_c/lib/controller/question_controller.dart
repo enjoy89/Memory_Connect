@@ -7,4 +7,5 @@ class QuestionController extends GetxController {
   RxBool isListening = false.obs;
 
   RxString tempAnswer = "".obs;
+  RxBool drawingAnswer = false.obs;
 }

@@ -2,6 +2,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:m_c/controller/question_controller.dart';
 
 void main() {
   runApp(const DrawingPopup());
@@ -16,6 +18,7 @@ class DrawingPopup extends StatefulWidget {
 
 class _DrawingPopupState extends State<DrawingPopup> {
   List<List<double>> lines = []; // 각 선마다의 x, y 좌표 리스트
+  QuestionController questionController = Get.put(QuestionController());
 
   @override
   Widget build(BuildContext context) {
@@ -58,6 +61,7 @@ class _DrawingPopupState extends State<DrawingPopup> {
               lines.clear();
             });
             Navigator.of(context).pop();
+            questionController.drawingAnswer.value = true;
           },
           child: const Text('확인'),
         ),

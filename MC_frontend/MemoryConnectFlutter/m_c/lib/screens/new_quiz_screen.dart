@@ -39,6 +39,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
   QuestionController questionController = Get.put(QuestionController());
   CarouselController carouselController = CarouselController();
 
+  int green = 0xff52d67f;
+  int gray = 0xfff4f4f4;
+  int darkGray = 0xffc8c8c8;
+
   int activeIndex = 0;
   List<String> videos = [
     "https://careerup-client.s3.ap-northeast-2.amazonaws.com/1.mp4",
@@ -167,6 +171,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -230,186 +235,173 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                   const SizedBox(
                     height: 10,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: OutlinedButton(
-                          onPressed: () {},
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xffFFFFFF),
-                            side: const BorderSide(
-                              color: Color(0xff75A569),
-                              width: 2,
-                            ),
-                            // 안쪽 패딩(여백)
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(color: Color(0xff75A569)),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                          child: const Text(
-                            '< 이전 문제',
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff75A569),
-                            ),
-                          ),
-                        ),
-                      ),
-                      OutlinedButton(
-                        onPressed: () {},
-                        style: OutlinedButton.styleFrom(
-                          backgroundColor: const Color(0xffFFFFFF),
-                          side: const BorderSide(
-                            color: Color(0xffFF8282),
-                            width: 2,
-                          ),
-                          // 안쪽 패딩(여백)
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 20, horizontal: 20),
-                        ),
-                        child: const Text(
-                          'O',
-                          style: TextStyle(
-                            fontSize: 26,
-                            fontWeight: FontWeight.bold,
-                            color: Color(0xffFF8282),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width / 3,
-                        child: OutlinedButton(
-                          onPressed: () {
-                            print('Next');
-                            if (activeIndex >=
-                                questionController.captions.length - 1) {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  // Pass the http.Client
-                                  builder: (context) => const LoadingResult(),
-                                ),
-                              );
-                            } else {
-                              carouselController.nextPage(
-                                  duration: const Duration(milliseconds: 300),
-                                  curve: Curves.linear);
-                            }
-                          },
-                          style: OutlinedButton.styleFrom(
-                            backgroundColor: const Color(0xffFFFFFF),
-                            side: const BorderSide(
-                              color: Color(0xff75A569),
-                              width: 2,
-                            ),
-                            // 안쪽 패딩(여백)
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 20, horizontal: 20),
-                            shape: RoundedRectangleBorder(
-                              side: const BorderSide(color: Color(0xff75A569)),
-                              borderRadius: BorderRadius.circular(50),
-                            ),
-                          ),
-                          child: Text(
-                            activeIndex >=
-                                    questionController.captions.length - 1
-                                ? '완료'
-                                : '다음 문제 >',
-                            style: const TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.bold,
-                              color: Color(0xff75A569),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+
+                  //     SizedBox(
+                  //       width: MediaQuery.of(context).size.width / 3,
+                  //       child: OutlinedButton(
+                  //         onPressed: () {
+                  //           print('Next');
+                  //           if (activeIndex >=
+                  //               questionController.captions.length - 1) {
+                  //             Navigator.push(
+                  //               context,
+                  //               MaterialPageRoute(
+                  //                 // Pass the http.Client
+                  //                 builder: (context) => const LoadingResult(),
+                  //               ),
+                  //             );
+                  //           } else {
+                  //             carouselController.nextPage(
+                  //                 duration: const Duration(milliseconds: 300),
+                  //                 curve: Curves.linear);
+                  //           }
+                  //         },
+                  //         style: OutlinedButton.styleFrom(
+                  //           backgroundColor: const Color(0xffFFFFFF),
+                  //           side: const BorderSide(
+                  //             color: Color(0xff75A569),
+                  //             width: 2,
+                  //           ),
+                  //           // 안쪽 패딩(여백)
+                  //           padding: const EdgeInsets.symmetric(
+                  //               vertical: 20, horizontal: 20),
+                  //           shape: RoundedRectangleBorder(
+                  //             side: const BorderSide(color: Color(0xff75A569)),
+                  //             borderRadius: BorderRadius.circular(50),
+                  //           ),
+                  //         ),
+                  //         child: Text(
+                  //           activeIndex >=
+                  //                   questionController.captions.length - 1
+                  //               ? '완료'
+                  //               : '다음 문제 >',
+                  //           style: const TextStyle(
+                  //             fontSize: 26,
+                  //             fontWeight: FontWeight.bold,
+                  //             color: Color(0xff75A569),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
                 ],
               ),
             ),
             const SizedBox(height: 20),
             SizedBox(
-              width: MediaQuery.of(context).size.width - 100,
+              width: MediaQuery.of(context).size.width - 150,
+              height: 110,
               child: OutlinedButton(
                 onPressed: () {
+                  if (activeIndex >= questionController.captions.length - 1) {
+                    // if (!_speechToText.isNotListening) {
+                    //   questionController.isListening.value = false;
+                    //   _stopListening();
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //         // Pass the http.Client
+                    //         builder: (context) => const LoadingResult()),
+                    //   );
+                    // }
+                    // else {
+                    //   questionController.isListening.value = true;
+                    //   _startListening();
+                    // }
+                  }
+
                   if (activeIndex == 6) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const DrawingPopup(),
-                    );
+                    if (questionController.drawingAnswer.value) {
+                      carouselController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linear);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const DrawingPopup(),
+                      );
+                    }
+
                     _sendVoiceDataToApi(activeIndex + 1, "오각형");
-                  } else if (activeIndex == 5) {
-                    _sendVoiceDataToApi(5, questionController.tempAnswer.value);
                   } else if (activeIndex == 4) {
-                    showDialog(
-                      context: context,
-                      builder: (context) => const CustomKeyboardScreen(),
-                    );
+                    if (questionController.tempAnswer.value != "") {
+                      carouselController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linear);
+                    } else {
+                      showDialog(
+                        context: context,
+                        builder: (context) => const CustomKeyboardScreen(),
+                      );
+                    }
                   } else {
                     print('말하기');
                     if (_speechToText.isNotListening) {
                       questionController.isListening.value = true;
                       _startListening();
                       print(_lastWords);
+                      if (activeIndex == 5) {
+                        _sendVoiceDataToApi(
+                            5, questionController.tempAnswer.value);
+                      }
                     } else {
                       questionController.isListening.value = false;
                       _stopListening();
                       _sendVoiceDataToApi(activeIndex + 1, _lastWords);
                       print("${activeIndex + 1} : $_lastWords");
+                      if (activeIndex >=
+                          questionController.captions.length - 1) {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              // Pass the http.Client
+                              builder: (context) => const LoadingResult()),
+                        );
+                      }
+                      carouselController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.linear);
                     }
                   }
                 },
                 style: OutlinedButton.styleFrom(
                   //메인 색상
-                  backgroundColor: const Color(0xffFFFFFF),
+                  backgroundColor: const Color(0xff7DBC85),
                   // 테두리
                   side: const BorderSide(
-                    color: Color(0xff75A569),
+                    color: Color(0xff7DBC85),
                     width: 2,
                   ),
                   // 안쪽 패딩(여백)
                   padding: const EdgeInsets.symmetric(vertical: 20),
-                  shape: RoundedRectangleBorder(
-                    side: const BorderSide(color: Color(0xff75A569)),
-                    borderRadius: BorderRadius.circular(50),
-                  ),
                 ),
                 child: Obx(
                   () {
                     if (activeIndex == 6) {
-                      return const Text(
-                        '그리기',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff75A569),
-                        ),
-                      );
+                      if (questionController.drawingAnswer.value) {
+                        return btnText('다음 >');
+                      }
+                      return btnText('그리기');
                     } else if (activeIndex == 4) {
-                      return const Text(
-                        '입력하기',
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff75A569),
-                        ),
-                      );
+                      if (questionController.tempAnswer.value != "") {
+                        return btnText('다음 >');
+                      }
+                      return btnText('입력하기');
+                    } else if (activeIndex >=
+                        questionController.captions.length - 1) {
+                      if (questionController.isListening.value) {
+                        return btnText('완료');
+                      } else {
+                        return btnText('말하기');
+                      }
                     } else {
-                      return Text(
-                        !questionController.isListening.value ? '말하기' : 'STOP',
-                        style: const TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xff75A569),
-                        ),
-                      );
+                      return btnText(!questionController.isListening.value
+                          ? '말하기'
+                          : '다음  >');
                     }
                   },
                 ),
@@ -418,6 +410,17 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
             const SizedBox(height: 20),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget btnText(String text) {
+    return Text(
+      text,
+      style: const TextStyle(
+        fontSize: 34,
+        fontWeight: FontWeight.bold,
+        color: Color(0xffffffff),
       ),
     );
   }
