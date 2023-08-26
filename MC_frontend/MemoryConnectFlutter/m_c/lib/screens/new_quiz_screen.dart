@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:awesome_ripple_animation/awesome_ripple_animation.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -171,7 +172,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(gray),
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -292,120 +293,124 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
               ),
             ),
             const SizedBox(height: 20),
-            SizedBox(
-              width: MediaQuery.of(context).size.width - 150,
-              height: 110,
-              child: OutlinedButton(
-                onPressed: () {
-                  if (activeIndex >= questionController.captions.length - 1) {
-                    // if (!_speechToText.isNotListening) {
-                    //   questionController.isListening.value = false;
-                    //   _stopListening();
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         // Pass the http.Client
-                    //         builder: (context) => const LoadingResult()),
-                    //   );
-                    // }
-                    // else {
-                    //   questionController.isListening.value = true;
-                    //   _startListening();
-                    // }
-                  }
-
-                  if (activeIndex == 6) {
-                    if (questionController.drawingAnswer.value) {
-                      carouselController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const DrawingPopup(),
-                      );
-                    }
-
-                    _sendVoiceDataToApi(activeIndex + 1, "오각형");
-                  } else if (activeIndex == 4) {
-                    if (questionController.tempAnswer.value != "") {
-                      carouselController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    } else {
-                      showDialog(
-                        context: context,
-                        builder: (context) => const CustomKeyboardScreen(),
-                      );
-                    }
+            Stack(
+              alignment: Alignment.center,
+              children: [
+                Obx(() {
+                  if (questionController.isListening.value) {
+                    return RippleAnimation(
+                      repeat: true,
+                      color: const Color(0xff7DBC85),
+                      minRadius: 90,
+                      ripplesCount: 6,
+                      size: Size(MediaQuery.of(context).size.width - 150, 110),
+                      child: Container(),
+                    );
                   } else {
-                    print('말하기');
-                    if (_speechToText.isNotListening) {
-                      questionController.isListening.value = true;
-                      _startListening();
-                      print(_lastWords);
-                      if (activeIndex == 5) {
-                        _sendVoiceDataToApi(
-                            5, questionController.tempAnswer.value);
-                      }
-                    } else {
-                      questionController.isListening.value = false;
-                      _stopListening();
-                      _sendVoiceDataToApi(activeIndex + 1, _lastWords);
-                      print("${activeIndex + 1} : $_lastWords");
-                      if (activeIndex >=
-                          questionController.captions.length - 1) {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              // Pass the http.Client
-                              builder: (context) => const LoadingResult()),
-                        );
-                      }
-                      carouselController.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.linear);
-                    }
+                    return Container();
                   }
-                },
-                style: OutlinedButton.styleFrom(
-                  //메인 색상
-                  backgroundColor: const Color(0xff7DBC85),
-                  // 테두리
-                  side: const BorderSide(
-                    color: Color(0xff7DBC85),
-                    width: 2,
-                  ),
-                  // 안쪽 패딩(여백)
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                ),
-                child: Obx(
-                  () {
-                    if (activeIndex == 6) {
-                      if (questionController.drawingAnswer.value) {
-                        return btnText('다음 >');
-                      }
-                      return btnText('그리기');
-                    } else if (activeIndex == 4) {
-                      if (questionController.tempAnswer.value != "") {
-                        return btnText('다음 >');
-                      }
-                      return btnText('입력하기');
-                    } else if (activeIndex >=
-                        questionController.captions.length - 1) {
-                      if (questionController.isListening.value) {
-                        return btnText('완료');
+                }),
+                SizedBox(
+                  width: MediaQuery.of(context).size.width - 150,
+                  height: 110,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      if (activeIndex == 6) {
+                        if (questionController.drawingAnswer.value) {
+                          carouselController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.linear);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const DrawingPopup(),
+                          );
+                        }
+
+                        _sendVoiceDataToApi(activeIndex + 1, "오각형");
+                      } else if (activeIndex == 4) {
+                        if (questionController.tempAnswer.value != "") {
+                          carouselController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.linear);
+                        } else {
+                          showDialog(
+                            context: context,
+                            builder: (context) => const CustomKeyboardScreen(),
+                          );
+                        }
                       } else {
-                        return btnText('말하기');
+                        print('말하기');
+                        if (_speechToText.isNotListening) {
+                          questionController.isListening.value = true;
+                          _startListening();
+                          print(_lastWords);
+                          if (activeIndex == 5) {
+                            _sendVoiceDataToApi(
+                                5, questionController.tempAnswer.value);
+                          }
+                        } else {
+                          questionController.isListening.value = false;
+                          _stopListening();
+                          _sendVoiceDataToApi(activeIndex + 1, _lastWords);
+                          print("${activeIndex + 1} : $_lastWords");
+                          if (activeIndex >=
+                              questionController.captions.length - 1) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  // Pass the http.Client
+                                  builder: (context) => const LoadingResult()),
+                            );
+                          }
+                          carouselController.nextPage(
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.linear);
+                        }
                       }
-                    } else {
-                      return btnText(!questionController.isListening.value
-                          ? '말하기'
-                          : '다음  >');
-                    }
-                  },
+                    },
+                    style: OutlinedButton.styleFrom(
+                      //메인 색상
+                      backgroundColor: const Color(0xff7DBC85),
+                      // 테두리
+                      side: const BorderSide(
+                        color: Color(0xff7DBC85),
+                        width: 2,
+                      ),
+                      // 안쪽 패딩(여백)
+                      padding: const EdgeInsets.symmetric(vertical: 20),
+                    ),
+                    child: Obx(
+                      () {
+                        if (activeIndex == 6) {
+                          if (questionController.drawingAnswer.value) {
+                            return btnText('다음 >');
+                          }
+                          return btnText('그리기');
+                        } else if (activeIndex == 4) {
+                          if (questionController.tempAnswer.value != "") {
+                            return btnText('다음 >');
+                          }
+                          return btnText('입력하기');
+                        } else if (activeIndex >=
+                            questionController.captions.length - 1) {
+                          if (questionController.isListening.value) {
+                            return btnText('완료');
+                          } else {
+                            return btnText('말하기');
+                          }
+                        } else if (questionController.isListening.value) {
+                          return btnText('다음 >');
+                        } else {
+                          return btnText(!questionController.isListening.value
+                              ? '말하기'
+                              : '다음  >');
+                        }
+                      },
+                    ),
+                  ),
                 ),
-              ),
+              ],
             ),
             const SizedBox(height: 20),
           ],
