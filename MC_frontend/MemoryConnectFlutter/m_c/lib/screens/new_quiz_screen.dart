@@ -89,9 +89,9 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
   }
 
   void _onSpeechResult(SpeechRecognitionResult result) {
-    setState(() {
-      _lastWords = result.recognizedWords;
-    });
+    //setState(() {
+    _lastWords = result.recognizedWords;
+    //});
   }
 
   // 여기는 Front to Back 음성데이터를 testId와 voiceText JSON형식으로 전송함
@@ -122,7 +122,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
 
     return SizedBox(
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 2,
+      height: MediaQuery.of(context).size.height / 1.5,
       child: FutureBuilder(
         future: _initializeVideoPlayerFuture,
         builder: (context, snapshot) {
@@ -187,7 +187,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                         // Set carousel controller
                         carouselController: carouselController,
                         options: CarouselOptions(
-                          height: MediaQuery.of(context).size.height / 2,
+                          height: MediaQuery.of(context).size.height / 1.5,
                           initialPage: 0,
                           viewportFraction: 1,
                           enlargeCenterPage: true,
@@ -246,6 +246,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                             // 안쪽 패딩(여백)
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 20),
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(color: Color(0xff75A569)),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                           ),
                           child: const Text(
                             '< 이전 문제',
@@ -307,6 +311,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                             // 안쪽 패딩(여백)
                             padding: const EdgeInsets.symmetric(
                                 vertical: 20, horizontal: 20),
+                            shape: RoundedRectangleBorder(
+                              side: const BorderSide(color: Color(0xff75A569)),
+                              borderRadius: BorderRadius.circular(50),
+                            ),
                           ),
                           child: Text(
                             activeIndex >=
@@ -336,14 +344,14 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                       context: context,
                       builder: (context) => const DrawingPopup(),
                     );
-                    _sendVoiceDataToApi(
-                        activeIndex + 1, questionController.tempAnswer.value);
+                    _sendVoiceDataToApi(activeIndex + 1, "오각형");
+                  } else if (activeIndex == 5) {
+                    _sendVoiceDataToApi(5, questionController.tempAnswer.value);
                   } else if (activeIndex == 4) {
                     showDialog(
                       context: context,
                       builder: (context) => const CustomKeyboardScreen(),
                     );
-                    _sendVoiceDataToApi(activeIndex + 1, "오각형");
                   } else {
                     print('말하기');
                     if (_speechToText.isNotListening) {
@@ -354,6 +362,7 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                       questionController.isListening.value = false;
                       _stopListening();
                       _sendVoiceDataToApi(activeIndex + 1, _lastWords);
+                      print("${activeIndex + 1} : $_lastWords");
                     }
                   }
                 },
@@ -367,6 +376,10 @@ class _NewQuizScreenState extends State<NewQuizScreen> {
                   ),
                   // 안쪽 패딩(여백)
                   padding: const EdgeInsets.symmetric(vertical: 20),
+                  shape: RoundedRectangleBorder(
+                    side: const BorderSide(color: Color(0xff75A569)),
+                    borderRadius: BorderRadius.circular(50),
+                  ),
                 ),
                 child: Obx(
                   () {

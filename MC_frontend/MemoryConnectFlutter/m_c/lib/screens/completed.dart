@@ -32,9 +32,10 @@ class _TestState extends State<Completed> with SingleTickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
+      body: SafeArea(
         child: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Lottie.network(
                 'https://lottie.host/0e0dcdb6-764d-4152-9c67-cd713b147b41/dKqbBwf4gC.json', // Lottie 애니메이션 파일 경로
@@ -52,56 +53,53 @@ class _TestState extends State<Completed> with SingleTickerProviderStateMixin {
                   });
                 },
               ),
-              Text(
+              const Text(
                 '완료되었습니다.',
                 style: TextStyle(
                   fontSize: 50,
-                  color: Colors.deepPurple.shade900,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(
                 height: 50,
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const ResultScreen()),
-                  );
-                },
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all<EdgeInsets>(
-                    const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+              SizedBox(
+                width: MediaQuery.of(context).size.width / 3,
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ResultScreen()),
+                    );
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xff75A569),
+                    side: const BorderSide(
+                      color: Color(0xff75A569),
+                      width: 2,
+                    ),
+                    // 안쪽 패딩(여백)
+                    padding: const EdgeInsets.symmetric(
+                        vertical: 20, horizontal: 20),
+                    shape: RoundedRectangleBorder(
+                      side: const BorderSide(color: Color(0xff75A569)),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
                   ),
-                ),
-                child: const Text(
-                  '결과 보기',
-                  style: TextStyle(
-                    fontSize: 35,
-                    fontWeight: FontWeight.bold,
+                  child: const Text(
+                    '결과 보기',
+                    style: TextStyle(
+                      fontSize: 35,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xffffffff),
+                    ),
                   ),
                 ),
               ),
               const SizedBox(
                 height: 20,
               ),
-              // ElevatedButton(
-              //   onPressed: () {},
-              //   style: ButtonStyle(
-              //     padding: MaterialStateProperty.all<EdgeInsets>(
-              //       const EdgeInsets.symmetric(horizontal: 80, vertical: 30),
-              //     ),
-              //   ),
-              //   child: const Text(
-              //     '결과 전송하기',
-              //     style: TextStyle(
-              //       fontSize: 35,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // )
             ],
           ),
         ),

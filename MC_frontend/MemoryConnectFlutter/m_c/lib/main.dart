@@ -8,8 +8,6 @@ import 'package:m_c/controller/question_controller.dart';
 import 'package:m_c/screens/loading.dart';
 import 'package:m_c/screens/loading_result.dart';
 import 'package:m_c/screens/new_quiz_screen.dart';
-import 'package:m_c/screens/pre_question_screen.dart';
-import 'package:m_c/screens/quiz_screen.dart';
 import 'package:m_c/data/questionData.dart';
 import 'package:lottie/lottie.dart';
 
@@ -80,91 +78,93 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xffFFFDF6),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          // logo 이미지
+      body: SingleChildScrollView(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            // logo 이미지
 
-          Image.network(
-            "https://careerup-client.s3.ap-northeast-2.amazonaws.com/logo.png",
-            width: 100,
-            height: 100,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 30),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '안녕하세요,\n저희 대화할까요?',
-                textAlign: TextAlign.left,
+            Image.network(
+              "https://careerup-client.s3.ap-northeast-2.amazonaws.com/logo.png",
+              width: 100,
+              height: 100,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 30),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '안녕하세요,\n저희 대화할까요?',
+                  textAlign: TextAlign.left,
+                  style: TextStyle(
+                    fontSize: 40,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            const Padding(
+              padding: EdgeInsets.only(left: 30),
+              child: Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  '영상통화를 하고 싶다면\n눌러주세요 :)',
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.w600,
+                      color: Color(0xff4D4D4D)),
+                ),
+              ),
+            ),
+            Image.network(
+              "https://careerup-client.s3.ap-northeast-2.amazonaws.com/big_logo.png",
+              width: 300,
+              height: 300,
+            ),
+            // lottie 화살표
+            Lottie.network(
+              'https://lottie.host/66772b2f-54f7-41e3-a4d3-96644ba85e16/GeCtE4fJdJ.json', // Lottie 애니메이션 파일 경로
+              width: 300,
+              height: 200,
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                await fetchDataAndShowCaptions(); // 자막 데이터 불러와서 저장.
+                print(questionController.captions.length);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    // builder: (context) => NewQuizScreen(
+                    //     httpClient: httpClient), // Pass the http.Client
+                    builder: (context) => const Loading(),
+                  ),
+                );
+              },
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                padding: MaterialStateProperty.all<EdgeInsets>(
+                  const EdgeInsets.symmetric(horizontal: 110, vertical: 20),
+                ),
+                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                  RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(50.0),
+                    side: const BorderSide(color: Color(0xff75A569)), // 테두리 색상
+                  ),
+                ),
+              ),
+              child: const Text(
+                '대화하기',
                 style: TextStyle(
-                  fontSize: 40,
-                  fontWeight: FontWeight.bold,
-                ),
+                    fontSize: 35,
+                    color: Color(0xff75A569),
+                    fontWeight: FontWeight.bold),
               ),
             ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          const Padding(
-            padding: EdgeInsets.only(left: 30),
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                '영상통화를 하고 싶다면\n눌러주세요 :)',
-                style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    color: Color(0xff4D4D4D)),
-              ),
-            ),
-          ),
-          Image.network(
-            "https://careerup-client.s3.ap-northeast-2.amazonaws.com/big_logo.png",
-            width: 300,
-            height: 300,
-          ),
-          // lottie 화살표
-          Lottie.network(
-            'https://lottie.host/66772b2f-54f7-41e3-a4d3-96644ba85e16/GeCtE4fJdJ.json', // Lottie 애니메이션 파일 경로
-            width: 300,
-            height: 200,
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              await fetchDataAndShowCaptions(); // 자막 데이터 불러와서 저장.
-              print(questionController.captions.length);
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  // builder: (context) => NewQuizScreen(
-                  //     httpClient: httpClient), // Pass the http.Client
-                  builder: (context) => const Loading(),
-                ),
-              );
-            },
-            style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all<Color>(Colors.white),
-              padding: MaterialStateProperty.all<EdgeInsets>(
-                const EdgeInsets.symmetric(horizontal: 110, vertical: 20),
-              ),
-              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50.0),
-                  side: const BorderSide(color: Color(0xff75A569)), // 테두리 색상
-                ),
-              ),
-            ),
-            child: const Text(
-              '대화하기',
-              style: TextStyle(
-                  fontSize: 35,
-                  color: Color(0xff75A569),
-                  fontWeight: FontWeight.bold),
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

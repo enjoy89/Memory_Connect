@@ -46,7 +46,7 @@ class _LoadingResultState extends State<Loading>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff7DBC85),
+      backgroundColor: const Color(0xff7DBC85),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
