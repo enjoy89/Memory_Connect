@@ -36,7 +36,7 @@ insert into test(test_id, test_question)
 values(12, "현재 년도는 무엇인가요?");
 
 insert into test(test_id, test_question)
-values(13, "뒤집어서 /'세계/'라고 쓰세요.");
+values(13, "뒤집어서 '세계'라고 쓰세요.");
 
 insert into test(test_id, test_question)
 values(14, "오늘은 무슨 요일인가요?");
@@ -51,7 +51,7 @@ insert into test(test_id, test_question)
 values(17, "다음 순서대로 수를 말씀해주세요: 2, 4, 6, ...");
 
 insert into test(test_id, test_question)
-values(18, "거꾸로 /'학교/'를 쓰세요.");
+values(18, "거꾸로 '학교'를 쓰세요.");
 
 insert into test(test_id, test_question)
 values(19, "이전에 어떤 도시에 살았는지 말해보세요.");
@@ -63,10 +63,10 @@ insert into test(test_id, test_question)
 values(21, "역방향으로 숫자를 세어보세요: 20, 19, 18, ...");
 
 insert into test(test_id, test_question)
-values(22, "/'반지/'의 첫 번째 글자를 말해보세요.");
+values(22, "'반지'의 첫 번째 글자를 말해보세요.");
 
 insert into test(test_id, test_question)
-values(23, "/'의자/'를 철자대로 말씀해주세요.");
+values(23, "'의자'를 철자대로 말씀해주세요.");
 
 insert into test(test_id, test_question)
 values(24, "15와 7을 더해주세요.");
@@ -75,43 +75,43 @@ insert into test(test_id, test_question)
 values(25, "9에서 3을 뺀 값을 계산해보세요.");
 
 insert into test(test_id, test_question)
-values(26, "/'사과, 핸드백, 노트북/' 중 과일을 고르세요.");
+values(26, "'사과, 핸드백, 노트북' 중 과일을 고르세요.");
 
 insert into test(test_id, test_question)
-values(27, "/'우산/'의 두 번째 글자를 말해보세요.");
+values(27, "'우산'의 두 번째 글자를 말해보세요.");
 
 insert into test(test_id, test_question)
 values(28, "3, 6, 9, ... 다음 숫자는 무엇인가요?");
 
 insert into test(test_id, test_question)
-values(29, "/'사과, 연필, 노트/' 중 과일을 고르세요.");
+values(29, "'사과, 연필, 노트' 중 과일을 고르세요.");
 
 insert into test(test_id, test_question)
 values(30, "역순으로 일요일부터 세어보세요: 일요일, 토요일, ...");
 
 insert into test(test_id, test_question)
-values(31, "/'창문/'의 두 번째 글자를 말해보세요.");
+values(31, "'창문'의 두 번째 글자를 말해보세요.");
 
 insert into test(test_id, test_question)
-values(32, "/'자전거/'를 따라서 말씀해보세요.");
+values(32, "'자전거'를 따라서 말씀해보세요.");
 
 insert into test(test_id, test_question)
-values(33, "/'골프/'의 첫 번째 글자를 말해보세요.");
+values(33, "'골프'의 첫 번째 글자를 말해보세요.");
 
 insert into test(test_id, test_question)
 values(34, "6과 9를 더하세요.");
 
 insert into test(test_id, test_question)
-values(35, "/'바다, 하늘, 호수/'중 소금과 관련된 단어를 찾아보세요.");
+values(35, "'바다, 하늘, 호수'중 소금과 관련된 단어를 찾아보세요.");
 
 insert into test(test_id, test_question)
-values(36, "/'컴퓨터/'의 세 번째 글자를 말해보세요.");
+values(36, "'컴퓨터'의 세 번째 글자를 말해보세요.");
 
 insert into test(test_id, test_question)
-values(37, "/'강아지, 고양이, 쥐/' 중 설치류와 관련된 단어를 찾아보세요.");
+values(37, "'강아지, 고양이, 쥐' 중 설치류와 관련된 단어를 찾아보세요.");
 
 insert into test(test_id, test_question)
-values(38, "/'노래, 춤, 음식/' 중 밥과 관련된 단어를 찾아보세요.");
+values(38, "'노래, 춤, 음식' 중 밥과 관련된 단어를 찾아보세요.");
 
 insert into member(member_id, member_name, member_age, member_gender, created_at)
 values(1, '이찬호', 26, '남', now());
