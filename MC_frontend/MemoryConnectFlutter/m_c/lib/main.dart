@@ -10,6 +10,7 @@ import 'package:m_c/screens/loading_result.dart';
 import 'package:m_c/screens/new_quiz_screen.dart';
 import 'package:m_c/data/questionData.dart';
 import 'package:lottie/lottie.dart';
+import 'package:m_c/screens/result_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -94,10 +95,10 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '안녕하세요,\n저희 대화할까요?',
+                  '안녕하세요,\nAI 치매 검사 도우미 입니다.',
                   textAlign: TextAlign.left,
                   style: TextStyle(
-                    fontSize: 40,
+                    fontSize: 45,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
@@ -111,9 +112,9 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  '영상통화를 하고 싶다면\n눌러주세요 :)',
+                  '대화를 하고 싶다면\n눌러주세요 :)',
                   style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 25,
                       fontWeight: FontWeight.w600,
                       color: Color(0xff4D4D4D)),
                 ),
