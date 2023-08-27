@@ -83,6 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(height: 10),
             // logo 이미지
 
             Image.network(
@@ -122,14 +123,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Image.network(
               "https://careerup-client.s3.ap-northeast-2.amazonaws.com/big_logo.png",
-              width: 300,
-              height: 300,
+              width: 250,
+              height: 250,
             ),
             // lottie 화살표
             Lottie.network(
               'https://lottie.host/66772b2f-54f7-41e3-a4d3-96644ba85e16/GeCtE4fJdJ.json', // Lottie 애니메이션 파일 경로
               width: 300,
-              height: 200,
+              height: 180,
             ),
             ElevatedButton(
               onPressed: () async {
